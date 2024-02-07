@@ -104,4 +104,9 @@ public partial class Manager_Brands : System.Web.UI.Page
         string secondCellValue = grdVBrands.SelectedRow.Cells[0].ToString();
         lblMsg.Text = secondCellValue;
     }
+
+    protected void grdVBrands_RowDeleted(object sender, GridViewDeletedEventArgs e)
+    {
+
+    }
 }

@@ -32,11 +32,12 @@
     <br />
     <div class="card card-body text-dark bg-light mb-3">
 
-        <asp:GridView ID="grdVBrands" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="BrandID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdVBrands_RowCommand">
+        <asp:GridView ID="grdVBrands" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="BrandID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdVBrands_RowCommand" OnRowDeleted="grdVBrands_RowDeleted">
             <Columns>
                 <asp:BoundField DataField="BrandID" HeaderText="Brand ID" InsertVisible="False" ReadOnly="True" SortExpression="BrandID" />
                 <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />
-                <asp:ButtonField CommandName="Ed" Text="Edit" HeaderText="Edit" />
+                <asp:ButtonField CommandName="Ed" Text="Update" HeaderText="Update" ShowHeader="True" />
+                <asp:CommandField HeaderText="Delete" ShowDeleteButton="True" ShowHeader="True" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />

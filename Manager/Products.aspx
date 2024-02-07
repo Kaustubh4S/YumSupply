@@ -26,18 +26,18 @@
                 </td>
                 <td>
                     <div class="form-data justify-content-center">
-                        <asp:DropDownList ID="ddlBrand" runat="server" DataSourceID="SqlDataSource2" DataTextField="BrandName" DataValueField="BrandName" CssClass="btn btn-secondary dropdown-toggle w-75" AppendDataBoundItems="True">
+                        <asp:DropDownList ID="ddlBrand" runat="server" DataSourceID="SqlDataSource2" DataTextField="BrandName" DataValueField="BrandID" CssClass="btn btn-secondary dropdown-toggle w-75" AppendDataBoundItems="True">
                             <asp:ListItem Selected="True" Value="-1">~Select Brand~</asp:ListItem>
                         </asp:DropDownList>
-                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT [BrandName] FROM [Brands] ORDER BY [BrandName]"></asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT * FROM [Brands] ORDER BY [BrandName]"></asp:SqlDataSource>
                     </div>
                 </td>
                 <td>
                     <div class="form-data ">
-                        <asp:DropDownList ID="ddlCategory" runat="server" DataSourceID="SqlDataSource3" DataTextField="CategoryName" CssClass="btn btn-secondary dropdown-toggle w-75" DataValueField="CategoryName" AppendDataBoundItems="True">
+                        <asp:DropDownList ID="ddlCategory" runat="server" DataSourceID="SqlDataSource3" DataTextField="CategoryName" CssClass="btn btn-secondary dropdown-toggle w-75" DataValueField="CategoryID" AppendDataBoundItems="True">
                             <asp:ListItem Selected="True" Value="-1">~Select Category~</asp:ListItem>
                         </asp:DropDownList>
-                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT [CategoryName] FROM [Category] ORDER BY [CategoryName]"></asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT * FROM [Category] ORDER BY [CategoryName]"></asp:SqlDataSource>
                     </div>
                 </td>
                 <td>
@@ -69,7 +69,7 @@
     <div class=" card-body text-dark bg-light mb-3">
 
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Product.ProductID, Product.ProductName, Brands.BrandName, Category.CategoryName, Product.Price, Product.Date FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID ORDER BY Product.ProductName"></asp:SqlDataSource>
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="ProductID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal">
+        <asp:GridView ID="grdProducts" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="ProductID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal">
             <Columns>
                 <asp:BoundField DataField="ProductID" HeaderText="ProductID" InsertVisible="False" ReadOnly="True" SortExpression="ProductID" />
                 <asp:BoundField DataField="ProductName" HeaderText="ProductName" SortExpression="ProductName" />

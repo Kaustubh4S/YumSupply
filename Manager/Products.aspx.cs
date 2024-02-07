@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class Manager_Products : System.Web.UI.Page
@@ -15,7 +11,7 @@ public partial class Manager_Products : System.Web.UI.Page
             Response.Redirect("~/Default.aspx");
         }
     }
-    
+
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         if (ddlBrand.SelectedValue == "-1")
@@ -30,7 +26,7 @@ public partial class Manager_Products : System.Web.UI.Page
             lblMsg.ForeColor = System.Drawing.Color.Red;
             return;
         }
-
+       // SaveProduct();
         /*
         if (HiddenField1.Value == "")
         {
@@ -49,19 +45,21 @@ public partial class Manager_Products : System.Web.UI.Page
     {
         try
         {
+
             string strCmd = "SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "';";
-            DataTable dt = SQLHelper.FillData(strCmd);
-            if (dt.Rows.Count > 0)
+            DataTable dtProduct = SQLHelper.FillData(strCmd);
+            if (dtProduct.Rows.Count > 0)
             {
                 lblMsg.Text = "Product is Already Existed!";
+                return;
             }
-            else
-            {
-                strCmd = "INSERT INTO Product(ProductName, BrandID, CategoryID, Price) VALUES('" + txtProductName.Text + "');";
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Product Added Sucessfully!";
-                Clears();
-            }
+            string strCurrentDate = DateTime.Now.ToString("dd-MM-yyyy");
+            string dt = DateTime.Now.ToString("dd-mmm-yyyy");
+            lblMsg.Text = dt;
+            strCmd = "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", " + Convert.ToDateTime(dt) + ");";
+            SQLHelper.ExecuteNonQuery(strCmd);
+            lblMsg.Text = "Product Added Sucessfully!";
+            Clears();
         }
         catch (Exception ex)
         {
@@ -72,8 +70,9 @@ public partial class Manager_Products : System.Web.UI.Page
     private void Clears()
     {
         txtProductName.Text = "";
+        txtPrice.Text = "";
         txtProductName.Focus();
-        GridView1.DataBind();
+        grdProducts.DataBind();
         btnAdd.Text = "Save";
         HiddenField1.Value = "";
 
@@ -107,17 +106,17 @@ public partial class Manager_Products : System.Web.UI.Page
         if (e.CommandName == "Ed")
         {
             int index = Convert.ToInt32(e.CommandArgument.ToString());
-            HiddenField1.Value = GridView1.Rows[index].Cells[0].Text;
-            txtProductName.Text = GridView1.Rows[index].Cells[1].Text;
+            HiddenField1.Value = grdProducts.Rows[index].Cells[0].Text;
+            txtProductName.Text = grdProducts.Rows[index].Cells[1].Text;
             btnAdd.Text = "Update";
         }
     }
 
     protected void grdVBrands_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string secondCellValue = GridView1.SelectedRow.Cells[0].ToString();
+        string secondCellValue = grdProducts.SelectedRow.Cells[0].ToString();
         lblMsg.Text = secondCellValue;
     }
-    
+
 }
 
