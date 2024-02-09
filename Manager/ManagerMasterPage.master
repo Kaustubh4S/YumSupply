@@ -40,6 +40,10 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
+                                    <li><a class="dropdown-item" href="Category.aspx">Category</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li><a class="dropdown-item" href="Products.aspx">Products</a></li>
                                 </ul>
                             </li>

@@ -26,8 +26,8 @@ public partial class Manager_Products : System.Web.UI.Page
             lblMsg.ForeColor = System.Drawing.Color.Red;
             return;
         }
-       // SaveProduct();
-        /*
+        SaveProduct();
+
         if (HiddenField1.Value == "")
         {
             //save
@@ -38,32 +38,30 @@ public partial class Manager_Products : System.Web.UI.Page
             //update
             UpdateProduct();
         }
-        */
+
     }
 
     private void SaveProduct()
     {
         try
         {
-
-            string strCmd = "SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "';";
+            string strCmd = "SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlBrand.SelectedValue + ");";
             DataTable dtProduct = SQLHelper.FillData(strCmd);
             if (dtProduct.Rows.Count > 0)
             {
                 lblMsg.Text = "Product is Already Existed!";
                 return;
             }
-            string strCurrentDate = DateTime.Now.ToString("dd-MM-yyyy");
-            string dt = DateTime.Now.ToString("dd-mmm-yyyy");
-            lblMsg.Text = dt;
-            strCmd = "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", " + Convert.ToDateTime(dt) + ");";
-            SQLHelper.ExecuteNonQuery(strCmd);
-            lblMsg.Text = "Product Added Sucessfully!";
-            Clears();
+            else
+            {
+                strCmd = "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", '" + DateTime.Now + "');";
+                SQLHelper.ExecuteNonQuery(strCmd);
+                lblMsg.Text = "Product Added Sucessfully!";
+                Clears();
+            }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
         }
     }
 
@@ -71,9 +69,12 @@ public partial class Manager_Products : System.Web.UI.Page
     {
         txtProductName.Text = "";
         txtPrice.Text = "";
+        txtPrice.Text = "";
+        ddlBrand.SelectedIndex = -1;
+        ddlCategory.SelectedIndex = -1;
         txtProductName.Focus();
         grdProducts.DataBind();
-        btnAdd.Text = "Save";
+        btnAdd.Text = "Add";
         HiddenField1.Value = "";
 
     }
@@ -82,7 +83,7 @@ public partial class Manager_Products : System.Web.UI.Page
     {
         try
         {
-            string strCmd = "SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "' and ProductID<>" + HiddenField1.Value;
+            string strCmd = "SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "' and ProductID=" + HiddenField1.Value;
             DataTable dt = SQLHelper.FillData(strCmd);
             if (dt.Rows.Count > 0)
             {
@@ -90,7 +91,7 @@ public partial class Manager_Products : System.Web.UI.Page
             }
             else
             {
-                strCmd = "update Product set ProductName='" + txtProductName.Text + "' where ProductID=" + HiddenField1.Value;
+                strCmd = "update Product set ProductName='" + txtProductName.Text + "', BrandID="+ddlBrand.SelectedValue+", CategoryID="+ddlCategory.SelectedValue+",Price ="+Convert.ToSingle(txtPrice.Text)+" where ProductID=" + HiddenField1.Value;
                 SQLHelper.ExecuteNonQuery(strCmd);
                 lblMsg.Text = "Product updated Sucessfully!";
                 Clears();
@@ -101,22 +102,29 @@ public partial class Manager_Products : System.Web.UI.Page
             throw ex;
         }
     }
-    protected void grdVBrands_RowCommand(object sender, GridViewCommandEventArgs e)
+
+
+    protected void grdProducts_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (e.CommandName == "Ed")
+        if (e.CommandName == "up")
         {
             int index = Convert.ToInt32(e.CommandArgument.ToString());
             HiddenField1.Value = grdProducts.Rows[index].Cells[0].Text;
             txtProductName.Text = grdProducts.Rows[index].Cells[1].Text;
+            ddlBrand.SelectedValue = getID("SELECT BrandID FROM Brands WHERE BrandName='" + grdProducts.Rows[index].Cells[2].Text + "';");
+            ddlCategory.SelectedValue = getID("SELECT CategoryID FROM Category WHERE CategoryName='" + grdProducts.Rows[index].Cells[3].Text + "';");
+            txtPrice.Text = grdProducts.Rows[index].Cells[4].Text;
             btnAdd.Text = "Update";
         }
     }
 
-    protected void grdVBrands_SelectedIndexChanged(object sender, EventArgs e)
+    private string getID(string cmd)
     {
-        string secondCellValue = grdProducts.SelectedRow.Cells[0].ToString();
-        lblMsg.Text = secondCellValue;
+        DataTable dt = SQLHelper.FillData(cmd);
+        if (dt.Rows.Count > 0)
+            return dt.Rows[0][0].ToString();
+        else
+            return null;
     }
-
 }
 

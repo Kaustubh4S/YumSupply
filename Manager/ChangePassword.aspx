@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="ChangePassword ~Manager" Language="C#" MasterPageFile="~/Manager/ManagerMasterPage.master" AutoEventWireup="true" CodeFile="ChangePassword.aspx.cs" Inherits="Manager_ChangePassword" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link href="Content/defaultLogin.css" rel="stylesheet" />
+    <link href="../Content/defaultLogin.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h5 class="display-5">Change Password</h5>

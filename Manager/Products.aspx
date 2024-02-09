@@ -17,6 +17,7 @@
     <div class=" card-body text-dark bg-light mb-3">
         <table class="w-100 mt-3">
             <tr>
+
                 <td>
                     <div class="form-data forms-inputs">
                         <span>Product Name</span>
@@ -69,7 +70,7 @@
     <div class=" card-body text-dark bg-light mb-3">
 
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Product.ProductID, Product.ProductName, Brands.BrandName, Category.CategoryName, Product.Price, Product.Date FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID ORDER BY Product.ProductName"></asp:SqlDataSource>
-        <asp:GridView ID="grdProducts" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="ProductID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal">
+        <asp:GridView ID="grdProducts" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="ProductID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdProducts_RowCommand" AllowSorting="True">
             <Columns>
                 <asp:BoundField DataField="ProductID" HeaderText="ProductID" InsertVisible="False" ReadOnly="True" SortExpression="ProductID" />
                 <asp:BoundField DataField="ProductName" HeaderText="ProductName" SortExpression="ProductName" />
@@ -77,7 +78,7 @@
                 <asp:BoundField DataField="CategoryName" HeaderText="CategoryName" SortExpression="CategoryName" />
                 <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
                 <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" />
-                <asp:ButtonField CommandName="up" ShowHeader="True" Text="Update" />
+                <asp:ButtonField CommandName="up" ShowHeader="True" Text="Update" HeaderText="Update" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
@@ -88,7 +89,6 @@
             <SortedDescendingCellStyle BackColor="#E5E5E5" />
             <SortedDescendingHeaderStyle BackColor="#242121" />
         </asp:GridView>
-
     </div>
 </asp:Content>
 

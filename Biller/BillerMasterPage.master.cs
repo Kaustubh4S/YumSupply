@@ -13,6 +13,17 @@ public partial class Biller_BillerMasterPage : System.Web.UI.MasterPage
         {
             Response.Redirect("~/Default.aspx");
         }
+        if (!Page.IsPostBack)
+        {
+            lblFullName.Text = Session["FullName"].ToString();
+        }
     }
 
+    protected void btnLogout_Click(object sender, EventArgs e)
+    {
+        Session["UserID"] = "";
+        Session["RoleID"] = "";
+        Session["FullName"] = "";
+        Response.Redirect("~/Default.aspx");
+    }
 }

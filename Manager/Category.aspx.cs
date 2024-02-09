@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Manager_Brands : System.Web.UI.Page
+public partial class Manager_Category : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,7 +18,7 @@ public partial class Manager_Brands : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-        if(HiddenField1.Value=="")
+        if (HiddenField1.Value == "")
         {
             //save
             SaveBrand();
@@ -28,24 +28,23 @@ public partial class Manager_Brands : System.Web.UI.Page
             //update
             UpdateBrand();
         }
-        
     }
 
     private void SaveBrand()
     {
         try
         {
-            string strCmd = "SELECT BrandID FROM Brands WHERE BrandName='" + txtBrandName.Text + "';";
+            string strCmd = "SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "';";
             DataTable dt = SQLHelper.FillData(strCmd);
             if (dt.Rows.Count > 0)
             {
-                lblMsg.Text = "Brand is Already Existed!";
+                lblMsg.Text = "Category is Already Existed!";
             }
             else
             {
-                strCmd = "INSERT INTO Brands(BrandName) VALUES('" + txtBrandName.Text + "');";
+                strCmd = "INSERT INTO Category(CategoryName) VALUES('" + txtCategory.Text + "');";
                 SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Brand Added Sucessfully!";
+                lblMsg.Text = "Category Added Sucessfully!";
                 Clears();
             }
         }
@@ -57,29 +56,29 @@ public partial class Manager_Brands : System.Web.UI.Page
 
     private void Clears()
     {
-        txtBrandName.Text = "";
-        txtBrandName.Focus();
-        grdVBrands.DataBind();
+        txtCategory.Text = "";
+        txtCategory.Focus();
+        grdVCategory.DataBind();
         btnAdd.Text = "Save";
         HiddenField1.Value = "";
-       
+
     }
 
     private void UpdateBrand()
     {
         try
         {
-            string strCmd = "SELECT BrandID FROM Brands WHERE BrandName='" + txtBrandName.Text + "' and BrandID=" + HiddenField1.Value;
+            string strCmd = "SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "' and CategoryID=" + HiddenField1.Value;
             DataTable dt = SQLHelper.FillData(strCmd);
             if (dt.Rows.Count > 0)
             {
-                lblMsg.Text = "Brand is Already Exist";
+                lblMsg.Text = "Category is Already Exist";
             }
             else
             {
-                strCmd = "update Brands set BrandName='"+ txtBrandName.Text +"' where BrandID=" + HiddenField1.Value;
+                strCmd = "update Category set CategoryName='" + txtCategory.Text + "' where CategoryID=" + HiddenField1.Value;
                 SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Brand updated Sucessfully!";
+                lblMsg.Text = "Category updated Sucessfully!";
                 Clears();
             }
         }
@@ -89,13 +88,13 @@ public partial class Manager_Brands : System.Web.UI.Page
         }
     }
 
-    protected void grdVBrands_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void grdVCategory_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if(e.CommandName=="Ed")
+        if (e.CommandName == "up")
         {
             int index = Convert.ToInt32(e.CommandArgument.ToString());
-            HiddenField1.Value = grdVBrands.Rows[index].Cells[0].Text;
-            txtBrandName.Text = grdVBrands.Rows[index].Cells[1].Text;
+            HiddenField1.Value = grdVCategory.Rows[index].Cells[0].Text;
+            txtCategory.Text = grdVCategory.Rows[index].Cells[1].Text;
             btnAdd.Text = "Update";
         }
     }
