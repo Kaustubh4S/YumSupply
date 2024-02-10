@@ -26,43 +26,20 @@ public partial class Manager_Products : System.Web.UI.Page
             lblMsg.ForeColor = System.Drawing.Color.Red;
             return;
         }
-        SaveProduct();
 
         if (HiddenField1.Value == "")
         {
-            //save
-            SaveProduct();
+            lblMsg.Text = "Product" + SQLHelper.Commit("SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlBrand.SelectedValue + ");", 
+                "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", '" + DateTime.Now + "');", 0);
+            Clears();
         }
         else
         {
-            //update
-            UpdateProduct();
+            lblMsg.Text = "Product" + SQLHelper.Commit("SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "' and ProductID=" + HiddenField1.Value, 
+                "update Product set ProductName='" + txtProductName.Text + "', BrandID=" + ddlBrand.SelectedValue + ", CategoryID=" + ddlCategory.SelectedValue + ",Price =" + Convert.ToSingle(txtPrice.Text) + " where ProductID=" + HiddenField1.Value, 1);
+            Clears();
         }
 
-    }
-
-    private void SaveProduct()
-    {
-        try
-        {
-            string strCmd = "SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlBrand.SelectedValue + ");";
-            DataTable dtProduct = SQLHelper.FillData(strCmd);
-            if (dtProduct.Rows.Count > 0)
-            {
-                lblMsg.Text = "Product is Already Existed!";
-                return;
-            }
-            else
-            {
-                strCmd = "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", '" + DateTime.Now + "');";
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Product Added Sucessfully!";
-                Clears();
-            }
-        }
-        catch (Exception)
-        {
-        }
     }
 
     private void Clears()
@@ -78,31 +55,6 @@ public partial class Manager_Products : System.Web.UI.Page
         HiddenField1.Value = "";
 
     }
-
-    private void UpdateProduct()
-    {
-        try
-        {
-            string strCmd = "SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "' and ProductID=" + HiddenField1.Value;
-            DataTable dt = SQLHelper.FillData(strCmd);
-            if (dt.Rows.Count > 0)
-            {
-                lblMsg.Text = "Product is Already Exist";
-            }
-            else
-            {
-                strCmd = "update Product set ProductName='" + txtProductName.Text + "', BrandID="+ddlBrand.SelectedValue+", CategoryID="+ddlCategory.SelectedValue+",Price ="+Convert.ToSingle(txtPrice.Text)+" where ProductID=" + HiddenField1.Value;
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Product updated Sucessfully!";
-                Clears();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
-
 
     protected void grdProducts_RowCommand(object sender, GridViewCommandEventArgs e)
     {

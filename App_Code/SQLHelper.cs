@@ -47,4 +47,35 @@ public class SQLHelper
             throw ex;
         }
     }
+
+    public static string Commit(string cmdCheck, string cmdSaveOrUpdate, int SaveOrUpdate)
+    {
+        try
+        {
+            DataTable dt = FillData(cmdCheck);
+            if (dt.Rows.Count > 0)
+            {
+                return " is Already Existed!";
+            }
+            else
+            {
+                if(SaveOrUpdate == 0)
+                {
+                    //save
+                    ExecuteNonQuery(cmdSaveOrUpdate);
+                    return " is Added Sucessfully!";
+                }
+                else
+                {
+                    //update
+                    ExecuteNonQuery(cmdSaveOrUpdate);
+                    return " is Updated Sucessfully!";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
 }

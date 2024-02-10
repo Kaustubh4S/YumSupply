@@ -20,40 +20,16 @@ public partial class Manager_Category : System.Web.UI.Page
     {
         if (HiddenField1.Value == "")
         {
-            //save
-            SaveBrand();
+            lblMsg.Text = "Category" + SQLHelper.Commit("SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "';", "INSERT INTO Category(CategoryName) VALUES('" + txtCategory.Text + "');", 0);
+            Clears();
         }
         else
         {
-            //update
-            UpdateBrand();
+            lblMsg.Text = "Category" + SQLHelper.Commit("SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "' and CategoryID=" + HiddenField1.Value, "update Category set CategoryName='" + txtCategory.Text + "' where CategoryID=" + HiddenField1.Value, 1);
+            Clears();
         }
     }
-
-    private void SaveBrand()
-    {
-        try
-        {
-            string strCmd = "SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "';";
-            DataTable dt = SQLHelper.FillData(strCmd);
-            if (dt.Rows.Count > 0)
-            {
-                lblMsg.Text = "Category is Already Existed!";
-            }
-            else
-            {
-                strCmd = "INSERT INTO Category(CategoryName) VALUES('" + txtCategory.Text + "');";
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Category Added Sucessfully!";
-                Clears();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
-
+    
     private void Clears()
     {
         txtCategory.Text = "";
@@ -62,31 +38,7 @@ public partial class Manager_Category : System.Web.UI.Page
         btnAdd.Text = "Save";
         HiddenField1.Value = "";
 
-    }
-
-    private void UpdateBrand()
-    {
-        try
-        {
-            string strCmd = "SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "' and CategoryID=" + HiddenField1.Value;
-            DataTable dt = SQLHelper.FillData(strCmd);
-            if (dt.Rows.Count > 0)
-            {
-                lblMsg.Text = "Category is Already Exist";
-            }
-            else
-            {
-                strCmd = "update Category set CategoryName='" + txtCategory.Text + "' where CategoryID=" + HiddenField1.Value;
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Category updated Sucessfully!";
-                Clears();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
+    }   
 
     protected void grdVCategory_RowCommand(object sender, GridViewCommandEventArgs e)
     {

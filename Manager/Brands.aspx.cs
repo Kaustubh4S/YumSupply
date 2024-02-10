@@ -20,40 +20,16 @@ public partial class Manager_Brands : System.Web.UI.Page
     {
         if(HiddenField1.Value=="")
         {
-            //save
-            SaveBrand();
+            lblMsg.Text= "Brand"+ SQLHelper.Commit("SELECT BrandID FROM Brands WHERE BrandName='" + txtBrandName.Text + "';", "INSERT INTO Brands(BrandName) VALUES('" + txtBrandName.Text + "');", 0);
+            Clears();
         }
         else
         {
-            //update
-            UpdateBrand();
+            lblMsg.Text = "Brand" + SQLHelper.Commit("SELECT BrandID FROM Brands WHERE BrandName='" + txtBrandName.Text + "' and BrandID=" + HiddenField1.Value, "update Brands set BrandName='" + txtBrandName.Text + "' where BrandID=" + HiddenField1.Value, 1);
+            Clears();
         }
         
-    }
-
-    private void SaveBrand()
-    {
-        try
-        {
-            string strCmd = "SELECT BrandID FROM Brands WHERE BrandName='" + txtBrandName.Text + "';";
-            DataTable dt = SQLHelper.FillData(strCmd);
-            if (dt.Rows.Count > 0)
-            {
-                lblMsg.Text = "Brand is Already Existed!";
-            }
-            else
-            {
-                strCmd = "INSERT INTO Brands(BrandName) VALUES('" + txtBrandName.Text + "');";
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Brand Added Sucessfully!";
-                Clears();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
+    }   
 
     private void Clears()
     {
@@ -64,31 +40,7 @@ public partial class Manager_Brands : System.Web.UI.Page
         HiddenField1.Value = "";
        
     }
-
-    private void UpdateBrand()
-    {
-        try
-        {
-            string strCmd = "SELECT BrandID FROM Brands WHERE BrandName='" + txtBrandName.Text + "' and BrandID=" + HiddenField1.Value;
-            DataTable dt = SQLHelper.FillData(strCmd);
-            if (dt.Rows.Count > 0)
-            {
-                lblMsg.Text = "Brand is Already Exist";
-            }
-            else
-            {
-                strCmd = "update Brands set BrandName='"+ txtBrandName.Text +"' where BrandID=" + HiddenField1.Value;
-                SQLHelper.ExecuteNonQuery(strCmd);
-                lblMsg.Text = "Brand updated Sucessfully!";
-                Clears();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
-
+    
     protected void grdVBrands_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if(e.CommandName=="Ed")
