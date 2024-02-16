@@ -11,11 +11,17 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
     {
         if (string.IsNullOrEmpty(Session["UserID"].ToString()))
         {
+
             Response.Redirect("~/Default.aspx");
         }
         if (!Page.IsPostBack)
         {
             lblFullName.Text = Session["FullName"].ToString();
+        }
+        if (Session["UserID"].ToString() == "1")
+        {
+            LinkButton1.Visible = true;
+            
         }
     }
 
@@ -25,5 +31,10 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
         Session["RoleID"] = "";
         Session["FullName"] = "";
         Response.Redirect("~/Default.aspx");
+    }
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Manager/Users.aspx");
     }
 }
