@@ -36,7 +36,8 @@
             <Columns>
                 <asp:BoundField DataField="BrandID" HeaderText="Brand ID" InsertVisible="False" ReadOnly="True" SortExpression="BrandID" />
                 <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />
-                <asp:ButtonField CommandName="Ed" Text="Edit" HeaderText="Edit" />
+                <asp:ButtonField CommandName="Ed" Text="Update" HeaderText="Update" ShowHeader="True" />
+                <asp:CommandField HeaderText="Delete" ShowDeleteButton="True" ShowHeader="True" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />

@@ -28,9 +28,9 @@ public partial class _Default : System.Web.UI.Page
                     Session["RoleId"] = dt.Rows[0]["RoleId"].ToString();
                     Session["FullName"] = dt.Rows[0]["FullName"].ToString();
                     Session["Password"] = dt.Rows[0]["Password"].ToString();
-                    if (Session["RoleId"].ToString() == "0")
-                        Response.Redirect("~/Manager/Home.aspx");
                     if (Session["RoleId"].ToString() == "1")
+                        Response.Redirect("~/Manager/Home.aspx");
+                    if (Session["RoleId"].ToString() == "2")
                         Response.Redirect("~/Biller/Home.aspx");
                 }
                 else
