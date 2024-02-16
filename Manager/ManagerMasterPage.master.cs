@@ -20,7 +20,7 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
         }
         if (Session["UserID"].ToString() == "1")
         {
-            LinkButton1.Visible = true;
+            lblbtnUsers.Visible = true;
             
         }
     }
@@ -33,7 +33,7 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
         Response.Redirect("~/Default.aspx");
     }
 
-    protected void LinkButton1_Click(object sender, EventArgs e)
+    protected void lblbtnUsers_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Manager/Users.aspx");
     }

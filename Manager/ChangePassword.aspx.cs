@@ -36,8 +36,7 @@ public partial class Manager_ChangePassword : System.Web.UI.Page
                     }
                     else
                     {
-                        string strCmd = "UPDATE Users SET Password = '" + txtPassword1.Text + "' WHERE UserID=" + Session["UserID"].ToString() + ";";
-                        SQLHelper.ExecuteNonQuery(strCmd);
+                        SQLHelper.ExecuteNonQuery("UPDATE Users SET Password = '" + txtPassword1.Text + "' WHERE UserID=" + Session["UserID"].ToString() + ";");
                         DataTable dt0 = SQLHelper.FillData("SELECT Password FROM Users WHERE UserID=" + Session["UserID"].ToString() + ";");
 
                         if (dt0.Rows[0]["Password"].ToString() == txtPassword1.Text)

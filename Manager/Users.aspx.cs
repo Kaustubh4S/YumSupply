@@ -12,7 +12,7 @@ public partial class Manager_Users : System.Web.UI.Page
         if (string.IsNullOrEmpty(Session["UserID"].ToString()))
             Response.Redirect("~/Default.aspx");
         if (!(Session["UserID"].ToString() == "1"))
-            Response.Redirect("~/Manager/Home.aspx");
+            Response.Redirect("~/Manager/Home.aspx");//prevents from accessing throught url
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
@@ -39,7 +39,7 @@ public partial class Manager_Users : System.Web.UI.Page
                     //lblMsg.Text = "User" + SQLHelper.Commit("SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlRole.SelectedValue + ");",
                     //    "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", '" + DateTime.Now + "');", 0);
 
-                    if (CheckBox1.Checked)
+                    if (chbActive.Checked)
                         binary = "True";
                     else
                         binary = "False";
@@ -81,5 +81,13 @@ public partial class Manager_Users : System.Web.UI.Page
     protected void grdUsers_RowCommand(object sender, GridViewCommandEventArgs e)
     {
 
+    }
+
+    protected void chbActive_CheckedChanged(object sender, EventArgs e)
+    {
+        if (chbActive.Checked)
+            lblActive.Text = "User Active";
+        else
+            lblActive.Text = "User InActive";
     }
 }

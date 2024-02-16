@@ -116,8 +116,8 @@
                             <%--<span class="slider round"></span>
                
                         </label>--%>
-                        
-                        <asp:CheckBox ID="CheckBox1" runat="server" Checked="True" />
+
+                        <asp:CheckBox ID="chbActive" runat="server" Checked="True" AutoPostBack="True" OnCheckedChanged="chbActive_CheckedChanged" />
                         <asp:Label ID="lblActive" runat="server">User Active</asp:Label>
 
                     </div>
