@@ -9,7 +9,7 @@ public partial class Manager_Users : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(Session["UserID"].ToString()))
+        if (string.IsNullOrEmpty(Session["UserID"].ToString()) || !(Session["RoleId"].ToString() == "1"))
             Response.Redirect("~/Default.aspx");
         if (!(Session["UserID"].ToString() == "1"))
             Response.Redirect("~/Manager/Home.aspx");//prevents from accessing throught url

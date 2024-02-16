@@ -9,11 +9,8 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(Session["UserID"].ToString()))
-        {
-
+        if (string.IsNullOrEmpty(Session["UserID"].ToString()) || !(Session["RoleId"].ToString() == "1"))
             Response.Redirect("~/Default.aspx");
-        }
         if (!Page.IsPostBack)
         {
             lblFullName.Text = Session["FullName"].ToString();

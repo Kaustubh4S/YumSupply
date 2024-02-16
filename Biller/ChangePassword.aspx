@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ChangePassword ~Biller" Language="C#" MasterPageFile="~/Biller/BillerMasterPage.master" AutoEventWireup="true" CodeFile="ChangePassowrd.aspx.cs" Inherits="Biller_ChangePassowrd" %>
+﻿<%@ Page Title="ChangePassword ~Biller" Language="C#" MasterPageFile="~/Biller/BillerMasterPage.master" AutoEventWireup="true" CodeFile="ChangePassword.aspx.cs" Inherits="Biller_ChangePassword" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="../Content/defaultLogin.css" rel="stylesheet" />
