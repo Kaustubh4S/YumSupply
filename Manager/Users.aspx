@@ -154,12 +154,12 @@
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Users.UserID, Users.FullName, Users.UserName, Users.Password, Roles.RoleName, Users.Dated, Users.Active FROM Roles INNER JOIN Users ON Roles.RoleID = Users.RoleId"></asp:SqlDataSource>
         <asp:GridView ID="grdUsers" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="UserID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdUsers_RowCommand" AllowSorting="True">
             <Columns>
-                <asp:BoundField DataField="UserID" HeaderText="UserID" InsertVisible="False" ReadOnly="True" SortExpression="UserID" />
-                <asp:BoundField DataField="FullName" HeaderText="FullName" SortExpression="FullName" />
+                <asp:BoundField DataField="UserID" HeaderText="User ID" InsertVisible="False" ReadOnly="True" SortExpression="UserID" />
+                <asp:BoundField DataField="FullName" HeaderText="Full Name" SortExpression="FullName" />
                 <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
                 <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
-                <asp:BoundField DataField="RoleName" HeaderText="RoleName" SortExpression="RoleName" />
-                <asp:BoundField DataField="Dated" HeaderText="Dated" SortExpression="Dated" />
+                <asp:BoundField DataField="RoleName" HeaderText="Role Name" SortExpression="RoleName" />
+                <asp:BoundField DataField="Dated" HeaderText="Dated" SortExpression="Dated" DataFormatString="{0:dd-MMMM-yyyy}" />
                 <asp:CheckBoxField DataField="Active" HeaderText="Active" SortExpression="Active" />
                 <asp:ButtonField CommandName="up" HeaderText="Update" ShowHeader="True" Text="Update" />
             </Columns>

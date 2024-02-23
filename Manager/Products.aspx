@@ -85,7 +85,7 @@
                 <asp:BoundField DataField="CategoryName" HeaderText="Category Name" SortExpression="CategoryName" />
                 <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
                 <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity" />
-                <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" />
+                <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" DataFormatString="{0:dd/MMMM/yyyy}" />
                 <asp:ButtonField CommandName="up" ShowHeader="True" Text="Update" HeaderText="Update" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
