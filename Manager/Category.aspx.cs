@@ -16,18 +16,27 @@ public partial class Manager_Category : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
+        string cmdCheck, cmdInsertOrUpdate;
+        int ID;
+
         if (HiddenField1.Value == "")
         {
-            lblMsg.Text = "Category" + SQLHelper.Commit("SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "';", "INSERT INTO Category(CategoryName) VALUES('" + txtCategory.Text + "');", 0);
+            cmdCheck = "SELECT CategoryID FROM Category WHERE CategoryName=@0;";
+            ID = SQLHelper.getID(cmdCheck, txtCategory.Text);
+            cmdInsertOrUpdate = "INSERT INTO Category(CategoryName) VALUES(@0)";
+            lblMsg.Text = "Category " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtCategory.Text);
             Clears();
         }
         else
         {
-            lblMsg.Text = "Category" + SQLHelper.Commit("SELECT CategoryID FROM Category WHERE CategoryName='" + txtCategory.Text + "' and CategoryID=" + HiddenField1.Value, "update Category set CategoryName='" + txtCategory.Text + "' where CategoryID=" + HiddenField1.Value, 1);
+            cmdCheck = "SELECT CategoryID FROM Category WHERE (CategoryName=@0 and CategoryID=@1);";
+            ID = SQLHelper.getID(cmdCheck, txtCategory.Text, HiddenField1.Value);
+            cmdInsertOrUpdate = "update Category set CategoryName=@0 where CategoryID=@1";
+            lblMsg.Text = "Category " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtCategory.Text, HiddenField1.Value);
             Clears();
         }
     }
-    
+
     private void Clears()
     {
         txtCategory.Text = "";
@@ -35,8 +44,7 @@ public partial class Manager_Category : System.Web.UI.Page
         grdVCategory.DataBind();
         btnAdd.Text = "Save";
         HiddenField1.Value = "";
-
-    }   
+    }
 
     protected void grdVCategory_RowCommand(object sender, GridViewCommandEventArgs e)
     {

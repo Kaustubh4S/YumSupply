@@ -12,6 +12,9 @@ public partial class Manager_Products : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
+        string cmdCheck, cmdInsertOrUpdate;
+        int PID;
+
         if (ddlBrand.SelectedValue == "-1")
         {
             lblMsg.Text = "Please Select Brand!";
@@ -28,34 +31,29 @@ public partial class Manager_Products : System.Web.UI.Page
 
         if (HiddenField1.Value == "")
         {
-            //save 
-            /*
-            *cmd.CommandText = "INSERT INTO Product (ProductID, CategoryID, BrandID, ProductName, Price, Date) OUTPUT inserted.ProductID, inserted.CategoryID, inserted.BrandID, @Quantity INTO AddStocks VALUES (@ProductID, @CategoryID, @BrandID, @ProductName, @Price, @Date)";
-            // add the parameters to the command object
-            cmd.Parameters.AddWithValue("@ProductID", ProductID);
-            cmd.Parameters.AddWithValue("@CategoryID", CategoryID);
-            cmd.Parameters.AddWithValue("@BrandID", BrandID);
-            cmd.Parameters.AddWithValue("@ProductName", ProductName);
-            cmd.Parameters.AddWithValue("@Price", Price);
-            cmd.Parameters.AddWithValue("@Date", Date);
-            cmd.Parameters.AddWithValue("@Quantity", Quantity); */
+            //save
+            cmdCheck = "SELECT ProductID FROM Product WHERE (ProductName=@0 AND BrandID=@1);";
+            PID = SQLHelper.getID(cmdCheck, txtProductName.Text, ddlBrand.SelectedValue);
+            cmdInsertOrUpdate = "INSERT INTO Product (ProductName, BrandID, CategoryID, Price, Date) VALUES (@0, @1, @2, @3, @4)";
+            lblMsg.Text = "Product " + SQLHelper.Commit(PID, cmdInsertOrUpdate, 0, txtProductName.Text, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text, DateTime.Now);
 
-            lblMsg.Text = "Product" + SQLHelper.Commit("SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlBrand.SelectedValue + ");",
-            "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", '" + DateTime.Now + "');", 0);
-
-            int PID = Convert.ToInt32(getID("SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlBrand.SelectedValue + ");"));
-
+            PID = SQLHelper.getID(cmdCheck, txtProductName.Text, ddlBrand.SelectedValue);
             if (PID != 0)
-                SQLHelper.Commit("SELECT AddStockID FROM AddStocks WHERE (ProductID=" + PID + ");",
-                    "INSERT INTO AddStocks(ProductID, CategoryID, BrandID, Quantity) VALUES(" + PID + "," + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(txtQuantity.Text) + ");", 0);
-
+            {
+                cmdCheck = "SELECT AddStockID FROM AddStocks WHERE (ProductID=@0);";
+                int PID1 = SQLHelper.getID(cmdCheck, PID);
+                cmdInsertOrUpdate = "INSERT INTO AddStocks(ProductID, CategoryID, BrandID, Quantity) VALUES(@0, @1, @2, @3);";
+                lblMsg.Text = "Product " + SQLHelper.Commit(PID1, cmdInsertOrUpdate, 0, PID, ddlCategory.SelectedValue, ddlBrand.SelectedValue, txtQuantity.Text);
+            }
             Clears();
         }
         else
         {
             //update
-            lblMsg.Text = "Product" + SQLHelper.Commit("SELECT ProductID FROM Product WHERE ProductName='" + txtProductName.Text + "' and ProductID=" + HiddenField1.Value,
-                "update Product set ProductName='" + txtProductName.Text + "', BrandID=" + ddlBrand.SelectedValue + ", CategoryID=" + ddlCategory.SelectedValue + ",Price =" + Convert.ToSingle(txtPrice.Text) + " where ProductID=" + HiddenField1.Value, 1);
+            cmdCheck = "SELECT ProductID FROM Product WHERE ProductName=@0 and ProductID=@1";
+            PID = SQLHelper.getID(cmdCheck, txtProductName.Text, HiddenField1.Value);
+            cmdInsertOrUpdate = "update Product set ProductName=@0, BrandID=@1, CategoryID=@2, Price=@3 where ProductID<>@4";
+            lblMsg.Text = "Product" + SQLHelper.Commit(PID, cmdInsertOrUpdate, 1, txtProductName.Text, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text, HiddenField1.Value);
             Clears();
         }
     }
@@ -92,15 +90,6 @@ public partial class Manager_Products : System.Web.UI.Page
             txtPrice.Text = grdProducts.Rows[index].Cells[4].Text;
             btnAdd.Text = "Update";
         }
-    }
-
-    private string getID(string cmd)
-    {
-        DataTable dt = SQLHelper.FillData(cmd);
-        if (dt.Rows.Count > 0)
-            return dt.Rows[0][0].ToString();
-        else
-            return null;
     }
 }
 

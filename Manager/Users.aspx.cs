@@ -26,27 +26,37 @@ public partial class Manager_Users : System.Web.UI.Page
 
         if (txtPassword1.Text == txtPassword2.Text)
         {
+            string cmdCheck, cmdInsertOrUpdate;
+            int ID;
+
             if (txtPassword1.Text.Length <= 6)
             {
                 ShowErrors("Password Must be Greater than 6 Characters");
             }
             else
             {
+                string binary = "";
+                if (chbActive.Checked)
+                    binary = "True";
+                else
+                    binary = "False";
+
                 if (HiddenField1.Value == "")
                 {
-
-                    string binary="";
-                    //lblMsg.Text = "User" + SQLHelper.Commit("SELECT ProductID FROM Product WHERE (ProductName='" + txtProductName.Text + "' AND BrandID=" + ddlRole.SelectedValue + ");",
-                    //    "INSERT INTO Product(ProductName, BrandID, CategoryID, Price, Date) VALUES('" + txtProductName.Text + "', " + Convert.ToInt32(ddlBrand.SelectedValue) + ", " + Convert.ToInt32(ddlCategory.SelectedValue) + ", " + Convert.ToSingle(txtPrice.Text) + ", '" + DateTime.Now + "');", 0);
-
-                    if (chbActive.Checked)
-                        binary = "True";
-                    else
-                        binary = "False";
-                    string strcmd1 = "select UserName from Users where UserName='" + txtUserName.Text + "'";
-                    string strcmd2 = "insert into Users values('" + txtUserName.Text + "', '" + txtPassword1.Text + "', " + ddlRole.SelectedValue + ", '" + txtFullName.Text + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + binary + "');";
-
-                    lblMsg.Text = SQLHelper.Commit(strcmd1, strcmd2, 0);
+                    //save
+                    cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0);";
+                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text);
+                    cmdInsertOrUpdate = "INSERT INTO Users (UserName, Password, RoleId, FullName, Dated, Active) VALUES (@0, @1, @2, @3, @4, @5)";
+                    lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtUserName.Text, txtPassword1.Text, ddlRole.SelectedValue, txtFullName.Text, DateTime.Now, binary);
+                    Clears();
+                }
+                else
+                {
+                    //update
+                    cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0 and UserID=@1);";
+                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text, HiddenField1.Value);
+                    cmdInsertOrUpdate = "update Users set UserName=@0, Password=@1, RoleId=@2, FullName=@3, Dated=@4, Active=@5) where UserID=@6)";
+                    lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtUserName.Text, txtPassword1.Text, ddlRole.SelectedValue, txtFullName.Text, DateTime.Now, binary, HiddenField1.Value);
                     Clears();
                 }
             }
@@ -71,6 +81,7 @@ public partial class Manager_Users : System.Web.UI.Page
         txtPassword1.Text = "";
         txtPassword2.Text = "";
         ddlRole.SelectedIndex = -1;
+        chbActive.Checked = true;
         txtFullName.Focus();
         grdUsers.DataBind();
         btnAdd.Text = "Add";
@@ -80,7 +91,17 @@ public partial class Manager_Users : System.Web.UI.Page
 
     protected void grdUsers_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-
+        if (e.CommandName == "up")
+        {
+            int index = Convert.ToInt32(e.CommandArgument.ToString());
+            HiddenField1.Value = grdUsers.Rows[index].Cells[0].Text;
+            txtFullName.Text = grdUsers.Rows[index].Cells[1].Text;
+            txtUserName.Text = grdUsers.Rows[index].Cells[2].Text;
+            txtPassword1.Text = grdUsers.Rows[index].Cells[3].Text;
+            ddlRole.SelectedValue = ddlRole.Items.FindByText(grdUsers.Rows[index].Cells[4].Text).Value;
+            chbActive = (CheckBox)grdUsers.Rows[index].FindControl("Active");
+            btnAdd.Text = "Update";
+        }
     }
 
     protected void chbActive_CheckedChanged(object sender, EventArgs e)
