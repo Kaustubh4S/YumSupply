@@ -30,12 +30,14 @@ public class SQLHelper
         }
     }
 
-    public static DataTable FillData(string strCmd)
+    public static DataTable FillData(string strCmd, params object[] values)
     {
         try
         {
             SqlConnection connection = GetConnection();
             SqlCommand cmd = new SqlCommand(strCmd, connection);
+            for (int i = 0; i < values.Length; i++)
+                cmd.Parameters.AddWithValue("@" + i, values[i]);
             SqlDataAdapter dtadp = new SqlDataAdapter();
             dtadp.SelectCommand = cmd;
             DataTable dt = new DataTable();
@@ -48,27 +50,26 @@ public class SQLHelper
         }
     }
 
-    public static string Commit(string cmdCheck, string cmdSaveOrUpdate, int SaveOrUpdate)
+    public static string Commit(int ID, string cmdSaveOrUpdate, int Save0OrUpdate1, params object[] value)
     {
         try
         {
-            DataTable dt = FillData(cmdCheck);
-            if (dt.Rows.Count > 0)
+            if (ID != 0)
             {
                 return " is Already Existed!";
             }
             else
             {
-                if(SaveOrUpdate == 0)
+                if (Save0OrUpdate1 == 0)
                 {
                     //save
-                    ExecuteNonQuery(cmdSaveOrUpdate);
+                    ExecuteQuery(cmdSaveOrUpdate, value);
                     return " is Added Sucessfully!";
                 }
                 else
                 {
                     //update
-                    ExecuteNonQuery(cmdSaveOrUpdate);
+                    ExecuteQuery(cmdSaveOrUpdate, value);
                     return " is Updated Sucessfully!";
                 }
             }
@@ -78,4 +79,33 @@ public class SQLHelper
             throw ex;
         }
     }
+
+    public static int getID(string cmd, params object[] values)
+    {
+        DataTable dt = FillData(cmd, values);
+        if (dt.Rows.Count > 0)
+            return Convert.ToInt32(dt.Rows[0][0].ToString());
+        else
+            return 0;
+    }
+
+    //params keyword allows to pass variable number of arguments to function
+    public static void ExecuteQuery(string strCmd, params object[] values)
+    {
+        SqlConnection connection = GetConnection();
+        SqlCommand cmd = new SqlCommand(strCmd, connection);
+        for (int i = 0; i < values.Length; i++)
+            cmd.Parameters.AddWithValue("@" + i, values[i]);
+        try
+        {
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            connection.Close();
+        }
+        catch (SqlException ex)
+        {
+            throw ex;
+        }
+    }
+
 }
