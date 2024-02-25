@@ -50,8 +50,8 @@ public partial class Manager_Products : System.Web.UI.Page
         else
         {
             //update
-            cmdCheck = "SELECT ProductID FROM Product WHERE ProductName=@0 and ProductID=@1";
-            PID = SQLHelper.getID(cmdCheck, txtProductName.Text, HiddenField1.Value);
+            cmdCheck = "SELECT ProductID FROM Product WHERE ProductName=@0 and BrandID=@1 and CategoryID=@2 and Price=@3 and ProductID=@4";
+            PID = SQLHelper.getID(cmdCheck, txtProductName.Text, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text, HiddenField1.Value);
             cmdInsertOrUpdate = "update Product set ProductName=@0, BrandID=@1, CategoryID=@2, Price=@3 where ProductID=@4";
             lblMsg.Text = "Product" + SQLHelper.Commit(PID, cmdInsertOrUpdate, 1, txtProductName.Text, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text, HiddenField1.Value);
             Clears();
@@ -70,7 +70,6 @@ public partial class Manager_Products : System.Web.UI.Page
         grdProducts.DataBind();
         btnAdd.Text = "Add";
         HiddenField1.Value = "";
-
     }
 
     protected void grdProducts_RowCommand(object sender, GridViewCommandEventArgs e)
