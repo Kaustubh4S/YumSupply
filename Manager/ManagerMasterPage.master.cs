@@ -18,7 +18,6 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
         if (Session["UserID"].ToString() == "1")
         {
             lblbtnUsers.Visible = true;
-            
         }
     }
 
