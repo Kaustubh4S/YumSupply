@@ -17,6 +17,7 @@ public partial class Manager_Stocks : System.Web.UI.Page
             LoadBrand();
             LoadCategory();
             LoadProduct();
+            LoadgrdStocks(0);
         }
     }
 
@@ -74,19 +75,41 @@ public partial class Manager_Stocks : System.Web.UI.Page
         }
     }
 
+    private void LoadgrdStocks(int Default0Brand1Category2Product3)
+    {
+        try
+        {
+            if (Default0Brand1Category2Product3 == 0)
+                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID ORDER BY Stocks.StockID DESC";
+            if (Default0Brand1Category2Product3 == 1)
+                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID="+ddlBrand.SelectedValue+" ORDER BY Stocks.StockID DESC";
+            if (Default0Brand1Category2Product3 == 2)
+                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " OR Category.CategoryID="+ddlCategory.SelectedValue+" ORDER BY Stocks.StockID DESC";
+            if (Default0Brand1Category2Product3 == 3)
+                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " OR Category.CategoryID=" + ddlCategory.SelectedValue + " OR Product.ProductID=" + ddlProduct.SelectedValue+" ORDER BY Stocks.StockID DESC";
+            grdStocks.DataBind();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
     protected void ddlBrand_SelectedIndexChanged(object sender, EventArgs e)
     {
         LoadCategory();
         LoadProduct();
+        LoadgrdStocks(1);
     }
 
     protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
         LoadProduct();
+        LoadgrdStocks(2);
     }
 
     protected void ddlProduct_SelectedIndexChanged(object sender, EventArgs e)
     {
-
+        LoadgrdStocks(3);
     }
 }
