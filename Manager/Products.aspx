@@ -51,17 +51,17 @@
                     </div>
                 </td>
 
-                <td>
+                <%--<td>
                     <div class="form-data forms-inputs col-auto">
                         <span>Quantity</span>
                         <asp:TextBox ID="txtQuantity" runat="server" CssClass="w-75" TextMode="Number"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Quantity should not be Empty" ControlToValidate="txtQuantity" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
-                </td>
+                </td>--%>
             </tr>
 
             <tr>
-                <td colspan="5">
+                <td colspan="4">
                     <asp:HiddenField ID="HiddenField1" runat="server" />
                     <div class="form-data">
                         <center>
@@ -75,18 +75,17 @@
     </div>
 
     <div class=" card-body text-dark bg-light mb-3">
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Product.ProductID, Product.ProductName, Brands.BrandName, Category.CategoryName, Product.Price, AddStocks.Quantity, Product.Date FROM AddStocks INNER JOIN Brands ON AddStocks.BrandID = Brands.BrandID INNER JOIN Category ON AddStocks.CategoryID = Category.CategoryID INNER JOIN Product ON AddStocks.ProductID = Product.ProductID AND Brands.BrandID = Product.BrandID AND Category.CategoryID = Product.CategoryID"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Product.ProductID, Product.ProductName, Category.CategoryName, Brands.BrandName, Product.Price, Product.Date FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID"></asp:SqlDataSource>
 
         <asp:GridView ID="grdProducts" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="ProductID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdProducts_RowCommand" AllowSorting="True">
             <Columns>
                 <asp:BoundField DataField="ProductID" HeaderText="Product ID" InsertVisible="False" ReadOnly="True" SortExpression="ProductID" />
                 <asp:BoundField DataField="ProductName" HeaderText="Product Name" SortExpression="ProductName" />
-                <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />
                 <asp:BoundField DataField="CategoryName" HeaderText="Category Name" SortExpression="CategoryName" />
+                <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />
                 <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
-                <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity" />
-                <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" DataFormatString="{0:dd/MMMM/yyyy}" />
-                <asp:ButtonField CommandName="up" ShowHeader="True" Text="Update" HeaderText="Update" />
+                <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" DataFormatString="{0:dd-MMMM-yyyy}" />
+                <asp:ButtonField CommandName="up" HeaderText="Update" Text="Update" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
