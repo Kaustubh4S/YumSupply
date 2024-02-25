@@ -54,7 +54,7 @@ public class SQLHelper
     {
         try
         {
-            if (ID != 0)
+            if ((ID != 0 && Save0OrUpdate1 == 0) || (ID != 0 && Save0OrUpdate1 != 0))
             {
                 return " is Already Existed!";
             }
