@@ -153,6 +153,7 @@
     <div class=" card-body text-dark bg-light mb-4">
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Users.UserID, Users.FullName, Users.UserName, Users.Password, Roles.RoleName, Users.Dated, Users.Active FROM Roles INNER JOIN Users ON Roles.RoleID = Users.RoleId"></asp:SqlDataSource>
         <asp:GridView ID="grdUsers" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="UserID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdUsers_RowCommand" AllowSorting="True">
+            <AlternatingRowStyle BackColor="Silver" />
             <Columns>
                 <asp:BoundField DataField="UserID" HeaderText="User ID" InsertVisible="False" ReadOnly="True" SortExpression="UserID" />
                 <asp:BoundField DataField="FullName" HeaderText="Full Name" SortExpression="FullName" />

@@ -33,6 +33,7 @@
     <div class="card card-body text-dark bg-light mb-3">
 
         <asp:GridView ID="grdVBrands" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="BrandID" DataSourceID="SqlDataSource1" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" OnRowCommand="grdVBrands_RowCommand">
+            <AlternatingRowStyle BackColor="Silver" />
             <Columns>
                 <asp:BoundField DataField="BrandID" HeaderText="Brand ID" InsertVisible="False" ReadOnly="True" SortExpression="BrandID" />
                 <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />

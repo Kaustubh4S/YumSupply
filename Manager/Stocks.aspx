@@ -38,6 +38,7 @@
     <div class=" card-body text-dark bg-light mb-4">
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID ORDER BY Stocks.StockID DESC"></asp:SqlDataSource>
         <asp:GridView ID="grdStocks" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="StockID" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True" DataSourceID="SqlDataSource1">
+            <AlternatingRowStyle BackColor="Silver" />
             <Columns>
                 <asp:BoundField DataField="StockID" HeaderText="Stock ID" InsertVisible="False" ReadOnly="True" SortExpression="StockID" />
                 <asp:BoundField DataField="ProductName" HeaderText="Product Name" SortExpression="ProductName" />
