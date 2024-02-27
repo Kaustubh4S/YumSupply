@@ -82,58 +82,51 @@ public partial class Manager_AddStocks : System.Web.UI.Page
             {
                 strcmd = "SELECT ProductID, ProductName FROM Product ORDER BY ProductName";
                 DataTable dt = SQLHelper.FillData(strcmd);
-                ddlProduct.DataTextField = "ProductName";
-                ddlProduct.DataValueField = "ProductID";
-                ddlProduct.DataSource = dt;
-                ddlProduct.DataBind();
-                ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
+                LoadProduct2(dt);
                 return;
             }
             if (Default0Brand1Category2 == 1)
             {
                 strcmd = "SELECT ProductID, ProductName FROM Product WHERE BrandID = @0 ORDER BY ProductName";
                 DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue);
-                ddlProduct.DataTextField = "ProductName";
-                ddlProduct.DataValueField = "ProductID";
-                ddlProduct.DataSource = dt;
-                ddlProduct.DataBind();
-                ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
+                LoadProduct2(dt);
+                return;
             }
             if (Default0Brand1Category2 == 2)
             {
                 strcmd = "SELECT ProductID, ProductName FROM Product WHERE CategoryID=@0 ORDER BY ProductName";
                 DataTable dt = SQLHelper.FillData(strcmd, ddlCategory.SelectedValue);
-                ddlProduct.DataTextField = "ProductName";
-                ddlProduct.DataValueField = "ProductID";
-                ddlProduct.DataSource = dt;
-                ddlProduct.DataBind();
-                ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
+                LoadProduct2(dt);
+                return;
             }
             if (Default0Brand1Category2 == 012)
             {
                 strcmd = "SELECT ProductID, ProductName FROM Product WHERE BrandID = @0 OR CategoryID=@1 ORDER BY ProductName";
                 DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue);
-                ddlProduct.DataTextField = "ProductName";
-                ddlProduct.DataValueField = "ProductID";
-                ddlProduct.DataSource = dt;
-                ddlProduct.DataBind();
-                ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
+                LoadProduct2(dt);
+                return;
             }
             if (Default0Brand1Category2 == 120)
             {
                 strcmd = "SELECT ProductID, ProductName FROM Product WHERE BrandID = @0 AND CategoryID=@1 ORDER BY ProductName";
                 DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue);
-                ddlProduct.DataTextField = "ProductName";
-                ddlProduct.DataValueField = "ProductID";
-                ddlProduct.DataSource = dt;
-                ddlProduct.DataBind();
-                ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
+                LoadProduct2(dt);
+                return;
             }
         }
         catch (Exception ex)
         {
             throw ex;
         }
+    }
+
+    private void LoadProduct2(DataTable dt)
+    {
+        ddlProduct.DataTextField = "ProductName";
+        ddlProduct.DataValueField = "ProductID";
+        ddlProduct.DataSource = dt;
+        ddlProduct.DataBind();
+        ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
     }
 
     private void LoadgrdAddStocks(int Default0Brand1Category2Product3)
