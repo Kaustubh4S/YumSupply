@@ -57,16 +57,15 @@
     </div>
     <br />
     <div class=" card-body text-dark bg-light mb-4">
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MyCon %>" SelectCommand="SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Stocks.OutQuantity=0 ORDER BY Stocks.StockID DESC"></asp:SqlDataSource>
-        <asp:GridView ID="grdAddStocks" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" DataKeyNames="StockID" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True" DataSourceID="SqlDataSource1">
+        <asp:GridView ID="grdAddStocks" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True">
             <AlternatingRowStyle BackColor="Silver" />
             <Columns>
-                <asp:BoundField DataField="StockID" HeaderText="Stock ID" InsertVisible="False" ReadOnly="True" SortExpression="StockID" />
+                <asp:BoundField DataField="ProductID" HeaderText="Product ID" InsertVisible="False" ReadOnly="True" SortExpression="StockID" />
                 <asp:BoundField DataField="ProductName" HeaderText="Product Name" SortExpression="ProductName" />
                 <asp:BoundField DataField="CategoryName" HeaderText="Category Name" SortExpression="CategoryName" />
                 <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />
-                <asp:BoundField DataField="InQuantity" HeaderText="In Quantity" SortExpression="InQuantity" />
-                <asp:BoundField DataField="OutQuantity" HeaderText="Out Quantity" SortExpression="OutQuantity" />
+                <asp:BoundField DataField="InQty" HeaderText="In Quantity" SortExpression="InQuantity" />
+                <asp:BoundField DataField="OutQty" HeaderText="Out Quantity" SortExpression="OutQuantity" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />

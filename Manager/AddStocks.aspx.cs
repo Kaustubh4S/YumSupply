@@ -15,113 +15,50 @@ public partial class Manager_AddStocks : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             LoadBrand();
-            LoadCategory(0);
-            LoadProduct(0);
-            LoadgrdAddStocks(0);
+            LoadCategory();
+            LoadProduct();
+            LoadgrdAddStocks();
         }
     }
 
     private void LoadBrand()
     {
-        try
-        {
-            string strcmd = "Select BrandID, BrandName from Brands order by BrandName";
-            DataTable dt = SQLHelper.FillData(strcmd);
-            ddlBrand.DataTextField = "BrandName";
-            ddlBrand.DataValueField = "BrandID";
-            ddlBrand.DataSource = dt;
-            ddlBrand.DataBind();
-            ddlBrand.Items.Insert(0, new ListItem("~Select Brand~", "-1"));
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+        string strcmd = "Select BrandID, BrandName from Brands order by BrandName";
+        DataTable dt = SQLHelper.FillData(strcmd);
+        ddlBrand.DataTextField = "BrandName";
+        ddlBrand.DataValueField = "BrandID";
+        ddlBrand.DataSource = dt;
+        ddlBrand.DataBind();
+        ddlBrand.Items.Insert(0, new ListItem("~Select Brand~", "-1"));
     }
 
-    private void LoadCategory(int Default0Brand1)
+    private void LoadCategory()
     {
-        try
-        {
-            string strcmd;
-            if (Default0Brand1 == 0)
-            {
-                strcmd = "SELECT CategoryID, CategoryName FROM Category ORDER BY CategoryName";
-                DataTable dt = SQLHelper.FillData(strcmd);
-                ddlCategory.DataSource = dt;
-                ddlCategory.DataTextField = "CategoryName";
-                ddlCategory.DataValueField = "CategoryID";
-                ddlCategory.DataBind();
-                ddlCategory.Items.Insert(0, new ListItem("~Select Category~", "-1"));
-                return;
-            }
-            if (Default0Brand1 == 1)
-            {
-                strcmd = "SELECT DISTINCT Category.CategoryID, Category.CategoryName FROM Category INNER JOIN Product ON Category.CategoryID = Product.CategoryID WHERE Product.BrandID = @0 ORDER BY Category.CategoryName";
-                DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue);
-                ddlCategory.DataSource = dt;
-                ddlCategory.DataTextField = "CategoryName";
-                ddlCategory.DataValueField = "CategoryID";
-                ddlCategory.DataBind();
-                ddlCategory.Items.Insert(0, new ListItem("~Select Category~", "-1"));
-                return;
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+        string strcmd = "SELECT DISTINCT Category.CategoryID, Category.CategoryName FROM Category INNER JOIN Product ON Category.CategoryID = Product.CategoryID";
+        if (ddlBrand.SelectedValue != "-1")
+            strcmd += " WHERE Product.BrandID = @0 ";
+        strcmd += " ORDER BY Category.CategoryName";
+        DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue);
+        ddlCategory.DataSource = dt;
+        ddlCategory.DataTextField = "CategoryName";
+        ddlCategory.DataValueField = "CategoryID";
+        ddlCategory.DataBind();
+        ddlCategory.Items.Insert(0, new ListItem("~Select Category~", "-1"));
     }
 
-    private void LoadProduct(int Default0Brand1Category2)
+    private void LoadProduct()
     {
-        try
+        string strcmd = "SELECT ProductID, ProductName FROM Product ";
+        if (ddlBrand.SelectedValue != "-1")
         {
-            string strcmd;
-            if (Default0Brand1Category2 == 0)
-            {
-                strcmd = "SELECT ProductID, ProductName FROM Product ORDER BY ProductName";
-                DataTable dt = SQLHelper.FillData(strcmd);
-                LoadProduct2(dt);
-                return;
-            }
-            if (Default0Brand1Category2 == 1)
-            {
-                strcmd = "SELECT ProductID, ProductName FROM Product WHERE BrandID = @0 ORDER BY ProductName";
-                DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue);
-                LoadProduct2(dt);
-                return;
-            }
-            if (Default0Brand1Category2 == 2)
-            {
-                strcmd = "SELECT ProductID, ProductName FROM Product WHERE CategoryID=@0 ORDER BY ProductName";
-                DataTable dt = SQLHelper.FillData(strcmd, ddlCategory.SelectedValue);
-                LoadProduct2(dt);
-                return;
-            }
-            if (Default0Brand1Category2 == 012)
-            {
-                strcmd = "SELECT ProductID, ProductName FROM Product WHERE BrandID = @0 OR CategoryID=@1 ORDER BY ProductName";
-                DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue);
-                LoadProduct2(dt);
-                return;
-            }
-            if (Default0Brand1Category2 == 120)
-            {
-                strcmd = "SELECT ProductID, ProductName FROM Product WHERE BrandID = @0 AND CategoryID=@1 ORDER BY ProductName";
-                DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue);
-                LoadProduct2(dt);
-                return;
-            }
+            strcmd += " WHERE BrandID = @0 ";
+            if (ddlCategory.SelectedValue != "-1")
+                strcmd += " and CategoryID=@1 ";
         }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
-
-    private void LoadProduct2(DataTable dt)
-    {
+        else if (ddlCategory.SelectedValue != "-1")
+            strcmd += " where CategoryID=@1 ";
+        strcmd += " ORDER BY ProductName";
+        DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue);
         ddlProduct.DataTextField = "ProductName";
         ddlProduct.DataValueField = "ProductID";
         ddlProduct.DataSource = dt;
@@ -129,105 +66,44 @@ public partial class Manager_AddStocks : System.Web.UI.Page
         ddlProduct.Items.Insert(0, new ListItem("~Select Product~", "-1"));
     }
 
-    private void LoadgrdAddStocks(int Default0Brand1Category2Product3)
+    private void LoadgrdAddStocks()
     {
-        try
+        string strcmd = "SELECT Product.ProductID, Product.ProductName, Category.CategoryName, Brands.BrandName, " +
+            " SUM(Stocks.InQuantity) AS InQty, SUM(Stocks.OutQuantity) AS OutQty " +
+        " FROM Product INNER JOIN " +
+        "                  Stocks ON Product.ProductID = Stocks.ProductID INNER JOIN " +
+        "                  Category ON Stocks.CategoryID = Category.CategoryID INNER JOIN " +
+        "                  Brands ON Stocks.BrandID = Brands.BrandID where 1=1";
+        if (ddlBrand.SelectedValue != "-1")
         {
-            if (Default0Brand1Category2Product3 == 0)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 1)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 2)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Category.CategoryID=" + ddlCategory.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 3)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Product.ProductID=" + ddlProduct.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 120)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " AND Category.CategoryID=" + ddlCategory.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 230)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Category.CategoryID=" + ddlCategory.SelectedValue + " AND Product.ProductID=" + ddlProduct.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 130)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " AND Product.ProductID=" + ddlProduct.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 1230)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " AND Category.CategoryID=" + ddlCategory.SelectedValue + " AND Product.ProductID=" + ddlProduct.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            if (Default0Brand1Category2Product3 == 0123)
-                SqlDataSource1.SelectCommand = "SELECT Stocks.StockID, Product.ProductName, Category.CategoryName, Brands.BrandName, Stocks.InQuantity, Stocks.OutQuantity FROM Brands INNER JOIN Product ON Brands.BrandID = Product.BrandID INNER JOIN Category ON Product.CategoryID = Category.CategoryID INNER JOIN Stocks ON Brands.BrandID = Stocks.BrandID AND Product.ProductID = Stocks.ProductID AND Category.CategoryID = Stocks.CategoryID WHERE Brands.BrandID=" + ddlBrand.SelectedValue + " OR Category.CategoryID=" + ddlCategory.SelectedValue + " OR Product.ProductID=" + ddlProduct.SelectedValue + " ORDER BY Stocks.StockID DESC";
-            grdAddStocks.DataBind();
+            strcmd += " and Stocks.BrandID= @0 ";
         }
-        catch (Exception ex)
+        if (ddlCategory.SelectedValue != "-1")
         {
-            throw ex;
+            strcmd += " and Stocks.CategoryID= @1 ";
         }
+        if (ddlProduct.SelectedValue != "-1")
+        {
+            strcmd += " and Stocks.ProductID= @2";
+        }
+        strcmd += " GROUP BY Product.ProductID, Product.ProductName, Category.CategoryName, Brands.BrandName ";
+        strcmd += " ORDER BY Product.ProductName";
+        DataTable dt = SQLHelper.FillData(strcmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue, ddlProduct.SelectedValue);
+        grdAddStocks.DataSource = dt;
+        grdAddStocks.DataBind();
     }
-
 
     protected void ddlBrand_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlBrand.SelectedValue == "-1")
-        {
-            LoadCategory(0);
-            if (ddlCategory.SelectedValue == "-1")
-            {
-                LoadProduct(0);
-                LoadgrdAddStocks(0);
-                return;
-            }
-            else
-            {
-                LoadProduct(2);
-                LoadgrdAddStocks(2);
-                return;
-            }
-        }
-        else
-        {
-            LoadCategory(1);
-            if (ddlCategory.SelectedValue == "-1")
-            {
-                LoadProduct(1);
-                LoadgrdAddStocks(1);
-                return;
-            }
-            else
-            {
-                LoadProduct(120);
-                LoadgrdAddStocks(120);
-                return;
-            }
-        }
+        LoadCategory();
+        LoadProduct();
+        LoadgrdAddStocks();
     }
 
     protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlCategory.SelectedValue == "-1")
-        {
-            if (ddlBrand.SelectedValue == "-1")
-            {
-                LoadProduct(0);
-                LoadgrdAddStocks(0);
-                return;
-            }
-            else
-            {
-                LoadProduct(1);
-                LoadgrdAddStocks(1);
-                return;
-            }
-        }
-        else
-        {
-            if (ddlBrand.SelectedValue == "-1")
-            {
-                LoadProduct(2);
-                LoadgrdAddStocks(2);
-                return;
-            }
-            else
-            {
-                LoadProduct(120);
-                LoadgrdAddStocks(120);
-                return;
-            }
-        }
+        LoadProduct();
+        LoadgrdAddStocks();
     }
 
     protected void ddlProduct_SelectedIndexChanged(object sender, EventArgs e)
@@ -261,70 +137,7 @@ public partial class Manager_AddStocks : System.Web.UI.Page
                 ddlBrand.SelectedValue = id.ToString();
             }
         }
-
-        if (ddlProduct.SelectedValue == "-1" && ddlCategory.SelectedValue == "-1" && ddlBrand.SelectedValue == "-1")
-            LoadgrdAddStocks(0);
-        else
-        {
-            if (!(ddlBrand.SelectedValue == "-1"))
-            {
-                if (!(ddlCategory.SelectedValue == "-1"))
-                {
-                    if (!(ddlProduct.SelectedValue == "-1"))
-                    {
-                        LoadgrdAddStocks(1230);
-                        return;
-                    }
-                    else
-                    {
-                        LoadgrdAddStocks(120);
-                        return;
-                    }
-                }
-                else
-                {
-                    if (!(ddlProduct.SelectedValue == "-1"))
-                    {
-                        LoadgrdAddStocks(130);
-                        return;
-                    }
-                    else
-                    {
-                        LoadgrdAddStocks(1);
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                if (!(ddlCategory.SelectedValue == "-1"))
-                {
-                    if (!(ddlProduct.SelectedValue == "-1"))
-                    {
-                        LoadgrdAddStocks(230);
-                        return;
-                    }
-                    else
-                    {
-                        LoadgrdAddStocks(2);
-                        return;
-                    }
-                }
-                else
-                {
-                    if (!(ddlProduct.SelectedValue == "-1"))
-                    {
-                        LoadgrdAddStocks(3);
-                        return;
-                    }
-                    else
-                    {
-                        LoadgrdAddStocks(0);
-                        return;
-                    }
-                }
-            }
-        }
+        LoadgrdAddStocks();
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
@@ -362,6 +175,6 @@ public partial class Manager_AddStocks : System.Web.UI.Page
         ddlCategory.SelectedValue = "-1";
         ddlProduct.SelectedValue = "-1";
         txtQuantity.Text = "";
-        LoadgrdAddStocks(0);
+        LoadgrdAddStocks();
     }
 }
