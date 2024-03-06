@@ -66,6 +66,7 @@
                 <asp:BoundField DataField="BrandName" HeaderText="Brand Name" SortExpression="BrandName" />
                 <asp:BoundField DataField="InQty" HeaderText="In Quantity" SortExpression="InQuantity" />
                 <asp:BoundField DataField="OutQty" HeaderText="Out Quantity" SortExpression="OutQuantity" />
+                <asp:BoundField DataField="Qty" HeaderText="Quantity" SortExpression="Quantity" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />

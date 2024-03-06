@@ -69,7 +69,7 @@ public partial class Manager_Stocks : System.Web.UI.Page
     private void LoadgrdStocks()
     {
         string strcmd = "SELECT Product.ProductID, Product.ProductName, Category.CategoryName, Brands.BrandName, " +
-            " SUM(Stocks.InQuantity) AS InQty, SUM(Stocks.OutQuantity) AS OutQty " +
+            " SUM(Stocks.InQuantity) AS InQty, SUM(Stocks.OutQuantity) AS OutQty , SUM(Stocks.InQuantity)-SUM(Stocks.OutQuantity) AS Qty" +
         " FROM Product INNER JOIN " +
         "                  Stocks ON Product.ProductID = Stocks.ProductID INNER JOIN " +
         "                  Category ON Stocks.CategoryID = Category.CategoryID INNER JOIN " +
