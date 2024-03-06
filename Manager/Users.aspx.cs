@@ -55,7 +55,7 @@ public partial class Manager_Users : System.Web.UI.Page
                     //update
                     cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0 and UserID=@1);";
                     ID = SQLHelper.getID(cmdCheck, txtUserName.Text, HiddenField1.Value);
-                    cmdInsertOrUpdate = "update Users set UserName=@0, Password=@1, RoleId=@2, FullName=@3, Dated=@4, Active=@5) where UserID=@6)";
+                    cmdInsertOrUpdate = "update Users set UserName=@0, Password=@1, RoleId=@2, FullName=@3, Dated=@4, Active=@5 where UserID=@6";
                     lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtUserName.Text, txtPassword1.Text, ddlRole.SelectedValue, txtFullName.Text, DateTime.Now, binary, HiddenField1.Value);
                     Clears();
                 }
