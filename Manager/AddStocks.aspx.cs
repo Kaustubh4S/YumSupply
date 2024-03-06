@@ -146,6 +146,7 @@ public partial class Manager_AddStocks : System.Web.UI.Page
         {
             lblMsg.Text = "Please Select Brand!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
+            ddlBrand.Focus();
             return;
         }
 
@@ -153,6 +154,7 @@ public partial class Manager_AddStocks : System.Web.UI.Page
         {
             lblMsg.Text = "Please Select Category!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
+            ddlCategory.Focus();
             return;
         }
 
@@ -160,6 +162,7 @@ public partial class Manager_AddStocks : System.Web.UI.Page
         {
             lblMsg.Text = "Please Select Product!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
+            ddlProduct.Focus();
             return;
         }
 

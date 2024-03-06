@@ -21,6 +21,7 @@ public partial class Manager_Users : System.Web.UI.Page
         {
             lblMsg.Text = "Please Select Role!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
+            ddlRole.Focus();
             return;
         }
 
