@@ -15,7 +15,8 @@
                 <td>
                     <div class="form-data forms-inputs col-auto mt-2">
                         <span>Customer Full Name</span>
-                        <asp:TextBox ID="txtCustName" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="100"></asp:TextBox>
+                        <asp:TextBox ID="txtCustName" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="100">QWERTYUIOPLKJHGFDSAZXCVBNM qwertyuioplkjhgfdsazxcvbnm</asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtCustName_FilteredTextBoxExtender" runat="server" BehaviorID="txtCustName_FilteredTextBoxExtender" TargetControlID="txtCustName" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtCustName" Display="Dynamic" ErrorMessage="Customer Name can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -42,6 +43,7 @@
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>Address Line1</span>
                         <asp:TextBox ID="txtAddress1" runat="server" CssClass="w-75" TextMode="MultiLine" MaxLength="50"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtAddress1_FilteredTextBoxExtender" runat="server" BehaviorID="txtAddress1_FilteredTextBoxExtender" TargetControlID="txtAddress1" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNM qwertyuioplkjhgfdsazxcvbnm,.'" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtAddress1" Display="Dynamic" ErrorMessage="Address can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -50,6 +52,7 @@
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>Address Line2</span>
                         <asp:TextBox ID="txtAddress2" runat="server" CssClass="w-75" TextMode="MultiLine" MaxLength="50"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtAddress2_FilteredTextBoxExtender" runat="server" BehaviorID="txtAddress2_FilteredTextBoxExtender" TargetControlID="txtAddress2" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNM qwertyuioplkjhgfdsazxcvbnm,.'" />
                     </div>
                 </td>
             </tr>
@@ -59,6 +62,7 @@
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>State</span>
                         <asp:TextBox ID="txtState" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="25"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtState_FilteredTextBoxExtender" runat="server" BehaviorID="txtState_FilteredTextBoxExtender" TargetControlID="txtState" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtState" Display="Dynamic" ErrorMessage="State can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -67,6 +71,7 @@
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>City</span>
                         <asp:TextBox ID="txtCity" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="25"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtCity_FilteredTextBoxExtender" runat="server" BehaviorID="txtCity_FilteredTextBoxExtender" TargetControlID="txtCity" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtCity" Display="Dynamic" ErrorMessage="City can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -75,6 +80,7 @@
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>Taluka</span>
                         <asp:TextBox ID="txtTaluka" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="25"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtTaluka_FilteredTextBoxExtender" runat="server" BehaviorID="txtTaluka_FilteredTextBoxExtender" TargetControlID="txtTaluka" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="txtTaluka" Display="Dynamic" ErrorMessage="Taluka can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>

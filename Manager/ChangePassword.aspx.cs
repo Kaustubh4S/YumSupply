@@ -18,9 +18,9 @@ public partial class Manager_ChangePassword : System.Web.UI.Page
     {
         if (txtPassword1.Text == txtPassword2.Text)
         {
-            if (txtPassword1.Text.Length <= 6)
+            if (txtPassword1.Text.Length <= 8)
             {
-                ShowErrors("Password Must be Greater than 6 Characters");
+                ShowErrors("Password Must be Greater than 8 Characters");
             }
             else
             {

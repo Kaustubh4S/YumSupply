@@ -14,6 +14,7 @@
                     <td style="text-align: right;">Enter Category </td>
                     <td>
                         <asp:TextBox ID="txtCategory" runat="server" MaxLength="50" Width="268px" CssClass="form-control"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtCategory_FilteredTextBoxExtender" runat="server" BehaviorID="txtCategory_FilteredTextBoxExtender" TargetControlID="txtCategory" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNM-qwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtCategory" Display="Dynamic" ErrorMessage="Please Enter Category Name" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </td>
                 </tr>

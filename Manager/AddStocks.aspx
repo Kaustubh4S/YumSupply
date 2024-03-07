@@ -37,6 +37,7 @@
                     <div class="form-data forms-inputs col-auto">
                         <span>Quantity</span>
                         <asp:TextBox ID="txtQuantity" runat="server" CssClass="w-75" TextMode="Number"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtQuantity_FilteredTextBoxExtender" runat="server" BehaviorID="txtQuantity_FilteredTextBoxExtender" TargetControlID="txtQuantity" ValidChars="0123456789" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Quantity should not be Empty" ControlToValidate="txtQuantity" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>

@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="Brands" Language="C#" MasterPageFile="~/Manager/ManagerMasterPage.master" AutoEventWireup="true" CodeFile="Brands.aspx.cs" Inherits="Manager_Brands" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style type="text/css">
+        .auto-style1 {
+            height: 50px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div>
@@ -11,9 +16,10 @@
         <div class="card card-body text-dark bg-light mb-3">
             <table class="w-100">
                 <tr>
-                    <td style="text-align: right;">Enter Brands </td>
-                    <td>
+                    <td style="text-align: right;" class="auto-style1">Enter Brands </td>
+                    <td class="auto-style1">
                         <asp:TextBox ID="txtBrandName" runat="server" MaxLength="50" Width="268px" CssClass="form-control"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtBrandName_FilteredTextBoxExtender" runat="server" BehaviorID="txtBrandName_FilteredTextBoxExtender" TargetControlID="txtBrandName" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNM-qwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtBrandName" Display="Dynamic" ErrorMessage="Please Enter Brand Name" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </td>
                 </tr>

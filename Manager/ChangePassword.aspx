@@ -14,10 +14,12 @@
                         <div class="forms-inputs mb-4">
                             <span>Enter New Password</span>
                             <asp:TextBox ID="txtPassword1" runat="server" CssClass="w-100" TextMode="Password" required></asp:TextBox>
+                            <ajaxToolkit:PasswordStrength ID="txtPassword1_PasswordStrength" runat="server" BehaviorID="txtPassword1_PasswordStrength" MinimumLowerCaseCharacters="1" MinimumNumericCharacters="1" MinimumSymbolCharacters="1" MinimumUpperCaseCharacters="1" PreferredPasswordLength="8" TargetControlID="txtPassword1" />
                         </div>
                         <div class="forms-inputs mb-4">
                             <span>Confirm New Password</span>
                             <asp:TextBox ID="txtPassword2" runat="server" CssClass="w-100" TextMode="Password" required></asp:TextBox>
+                            <ajaxToolkit:PasswordStrength ID="txtPassword2_PasswordStrength" runat="server" BehaviorID="txtPassword2_PasswordStrength" MinimumLowerCaseCharacters="1" MinimumNumericCharacters="1" MinimumSymbolCharacters="1" MinimumUpperCaseCharacters="1" PreferredPasswordLength="8" TargetControlID="txtPassword2" />
                         </div>
                         <div class="mb-3">
                             <asp:Button ID="btnUpdate" runat="server" Text="Update Password" CssClass="btn btn-dark w-100" OnClick="btnUpdate_Click" />

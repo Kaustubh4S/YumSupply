@@ -75,6 +75,7 @@
                     <div class="form-data forms-inputs col-auto mt-2">
                         <span>User Full Name</span>
                         <asp:TextBox ID="txtFullName" runat="server" CssClass="w-75" TextMode="SingleLine"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtFullName_FilteredTextBoxExtender" runat="server" BehaviorID="txtFullName_FilteredTextBoxExtender" TargetControlID="txtFullName" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNM qwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtFullName" Display="Dynamic" ErrorMessage="Full Name can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -82,6 +83,7 @@
                     <div class="form-data forms-inputs col-auto mt-2">
                         <span>UserName</span>
                         <asp:TextBox ID="txtUserName" runat="server" CssClass="w-75" TextMode="SingleLine"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtUserName_FilteredTextBoxExtender" runat="server" BehaviorID="txtUserName_FilteredTextBoxExtender" TargetControlID="txtUserName" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtUserName" Display="Dynamic" ErrorMessage="UserName can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
