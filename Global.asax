@@ -27,6 +27,7 @@
         Session["RoleId"] = "";
         Session["FullName"] = "";
         Session["Password"] = "";
+        Session["BillData"] = null;
     }
 
     void Session_End(object sender, EventArgs e)
