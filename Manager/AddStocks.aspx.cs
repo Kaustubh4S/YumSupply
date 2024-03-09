@@ -166,8 +166,18 @@ public partial class Manager_AddStocks : System.Web.UI.Page
             return;
         }
 
-        string cmd = "INSERT INTO Stocks (ProductID, BrandID, CategoryID, InQuantity, OutQuantity) VALUES (@0, @1, @2, @3, @4)";
-        SQLHelper.ExecuteQuery(cmd, ddlProduct.SelectedValue, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtQuantity.Text, 0);
+        string cmd = "SELECT InQuantity FROM Stocks WHERE (ProductID = @0)";
+        int inQty = SQLHelper.getID(cmd, ddlProduct.SelectedValue);
+        if (inQty > 0)
+        {
+            cmd = "UPDATE Stocks SET InQuantity = @0 WHERE (ProductID = @1)";
+            SQLHelper.ExecuteQuery(cmd, (inQty + Convert.ToInt32(txtQuantity.Text)), ddlProduct.SelectedValue);
+        }
+        else
+        {
+            cmd = "INSERT INTO Stocks (ProductID, BrandID, CategoryID, InQuantity, OutQuantity) VALUES (@0, @1, @2, @3, @4)";
+            SQLHelper.ExecuteQuery(cmd, ddlProduct.SelectedValue, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtQuantity.Text, 0);
+        }
         lblMsg.Text = "Quantity Added Sucessfully!";
         Clears();
     }
