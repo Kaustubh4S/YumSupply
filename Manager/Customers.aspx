@@ -15,8 +15,8 @@
                 <td>
                     <div class="form-data forms-inputs col-auto mt-2">
                         <span>Customer Full Name</span>
-                        <asp:TextBox ID="txtCustName" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="100">QWERTYUIOPLKJHGFDSAZXCVBNM qwertyuioplkjhgfdsazxcvbnm</asp:TextBox>
-                        <ajaxToolkit:FilteredTextBoxExtender ID="txtCustName_FilteredTextBoxExtender" runat="server" BehaviorID="txtCustName_FilteredTextBoxExtender" TargetControlID="txtCustName" />
+                        <asp:TextBox ID="txtCustName" runat="server" CssClass="w-75" TextMode="SingleLine" MaxLength="100"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtCustName_FilteredTextBoxExtender" runat="server" BehaviorID="txtCustName_FilteredTextBoxExtender" TargetControlID="txtCustName" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNM qwertyuioplkjhgfdsazxcvbnm" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtCustName" Display="Dynamic" ErrorMessage="Customer Name can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
