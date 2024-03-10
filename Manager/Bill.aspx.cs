@@ -304,7 +304,7 @@ public partial class Manager_Bill : System.Web.UI.Page
         con.Open();
         SqlTransaction tran = con.BeginTransaction();
         int InvNo = 1;
-        string strcmd = "SELECT InvoiceNumber FROM InvoiceNumbers WHERE(Dated = @0)";
+        string strcmd = "SELECT InvoiceNumber FROM InvoiceNumbers WHERE (Dated = @0)";
         try
         {
             SqlCommand cmd = new SqlCommand(strcmd, con, tran);
@@ -331,7 +331,7 @@ public partial class Manager_Bill : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@2", txtDate.Text);
             cmd.ExecuteNonQuery();
 
-            strcmd = "SELECT SellID FROM SellParent WHERE(InvoiceNumber = @0) AND(CustomerID = @1) AND(Dated = @2)";
+            strcmd = "SELECT SellID FROM SellParent WHERE (InvoiceNumber = @0) AND (CustomerID = @1) AND (Dated = @2)";
             cmd = new SqlCommand(strcmd, con, tran);
             cmd.Parameters.AddWithValue("@0", InvNo);
             cmd.Parameters.AddWithValue("@1", ddlCust.SelectedValue);
@@ -356,21 +356,27 @@ public partial class Manager_Bill : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@4", itm.Qty);
                 cmd.Parameters.AddWithValue("@5", itm.Price);
                 cmd.ExecuteNonQuery();
-            }
 
-            lst = (List<BillData>)Session["BillData"];
-            foreach (var itm in lst)
-            {
                 strcmd = "SELECT OutQuantity FROM Stocks WHERE (ProductID = @0)";
-                int outQty = SQLHelper.getID(strcmd, ddlProduct.SelectedValue);
+                cmd = new SqlCommand(strcmd, con, tran);
+                cmd.Parameters.AddWithValue("@0", itm.ProductID);
+                dtadp = new SqlDataAdapter();
+                dtadp.SelectCommand = cmd;
+                dt = new DataTable();
+                dtadp.Fill(dt);
+                int outQty = 0;
+                outQty = Convert.ToInt32(dt.Rows[0][0].ToString());
+
                 strcmd = "UPDATE Stocks SET OutQuantity = @0 WHERE(ProductID = @1)";
                 cmd = new SqlCommand(strcmd, con, tran);
                 cmd.Parameters.AddWithValue("@0", (outQty + itm.Qty));
                 cmd.Parameters.AddWithValue("@1", itm.ProductID);
                 cmd.ExecuteNonQuery();
             }
+
             tran.Commit();
             con.Close();
+            Session["BillData"] = null;
             Response.Redirect("~/Manager/BillPreview.aspx?id=" + SellID, false);
 
         }
