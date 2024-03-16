@@ -22,7 +22,7 @@
                 <td>
                     <div class="form-data forms-inputs col-auto">
                         <span>Date</span>
-                        <asp:TextBox ID="txtDate" runat="server" CssClass="w-75" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtDate" runat="server" CssClass="w-75" TextMode="Date" ValidationGroup="ConfirmBeforeAdd" CausesValidation="True"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtDate" Display="Dynamic" ErrorMessage="Select Date" ForeColor="Red" SetFocusOnError="True" Font-Bold="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -55,7 +55,7 @@
                 <td>
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>Price</span>
-                        <asp:TextBox ID="txtPrice" runat="server" CssClass="w-75" TextMode="Number"></asp:TextBox>
+                        <asp:TextBox ID="txtPrice" runat="server" CssClass="w-75" TextMode="Number" ValidationGroup="ConfirmBeforeAdd"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Price should not be Empty" ControlToValidate="txtPrice" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -63,7 +63,7 @@
                 <td>
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>Quantity</span>
-                        <asp:TextBox ID="txtQty" runat="server" CssClass="w-75" TextMode="Number"></asp:TextBox>
+                        <asp:TextBox ID="txtQty" runat="server" CssClass="w-75" TextMode="Number" ValidationGroup="ConfirmBeforeAdd"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Quantity should not be Empty" ControlToValidate="txtQty" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -81,7 +81,7 @@
                     <asp:HiddenField ID="HiddenField1" runat="server" />
                     <div class="form-data">
                         <center>
-                            <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-primary mt-4" OnClick="btnAdd_Click" Text="Add" />
+                            <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-primary mt-4" OnClick="btnAdd_Click" Text="Add" ValidationGroup="ConfirmBeforeAdd" />
                             <asp:Label ID="lblMsg" runat="server" ForeColor="#3399FF"></asp:Label>
                             </center>
                     </div>
@@ -92,7 +92,7 @@
 
     <br />
     <div class=" card-body text-dark bg-light mb-4">
-        <asp:GridView ID="grdBillView" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True">
+        <asp:GridView ID="grdBillView" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True" OnRowCommand="grdBillView_RowCommand">
             <AlternatingRowStyle BackColor="Silver" />
             <Columns>
                 <asp:BoundField DataField="ProductID" HeaderText="Product ID" />
@@ -137,7 +137,7 @@
 
     <div class="form-data">
         <center>
-        <asp:Button ID="btmSubmit" runat="server" CssClass="btn btn-primary mt-4" OnClick="btmSubmit_Click" Text="Submit" />
+        <asp:Button ID="btmSubmit" runat="server" CssClass="btn btn-primary mt-4" OnClick="btmSubmit_Click" Text="Submit" CausesValidation="False" />
         <asp:Label ID="lblSubmitMsg" runat="server" ForeColor="#3399FF"></asp:Label>
         </center>
     </div>

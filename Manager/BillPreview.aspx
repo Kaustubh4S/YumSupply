@@ -130,15 +130,34 @@
             <div class="body-section">
                 <div class="row">
                     <div class="col-6">
-                        <h2 class="heading">Invoice No.: <asp:Label ID="lblInv" runat="server" Text=""></asp:Label></h2>
-                        <p class="sub-heading">Order Date: <asp:Label ID="lblDate" runat="server" Text=""></asp:Label></p>
-                        <p class="sub-heading">Biller: <asp:Label ID="lblBiller" runat="server" Text=""></asp:Label></p>
+                        <h2 class="heading">Invoice No.:
+                            <asp:Label ID="lblInv" runat="server" Text=""></asp:Label></h2>
+                        <p class="sub-heading">
+                            Order Date:
+                            <asp:Label ID="lblDate" runat="server" Text=""></asp:Label>
+                        </p>
+                        <p class="sub-heading">
+                            Biller:
+                            <asp:Label ID="lblBiller" runat="server" Text=""></asp:Label>
+                        </p>
                     </div>
                     <div class="col-6">
-                        <p class="sub-heading">Full Name: <asp:Label ID="lblCustName" runat="server" Text=""></asp:Label></p>
-                        <p class="sub-heading">Address: <asp:Label ID="lblAdd" runat="server" Text=""></asp:Label></p>
-                        <p class="sub-heading">Phone Number: <asp:Label ID="lblMob" runat="server" Text=""></asp:Label></p>
-                        <p class="sub-heading">Taluka,City,State: <asp:Label ID="lblState" runat="server" Text=""></asp:Label></p>
+                        <p class="sub-heading">
+                            Full Name:
+                            <asp:Label ID="lblCustName" runat="server" Font-Bold="True"></asp:Label>
+                        </p>
+                        <p class="sub-heading">
+                            Address:
+                            <asp:Label ID="lblAdd" runat="server" Text=""></asp:Label>
+                        </p>
+                        <p class="sub-heading">
+                            Phone Number:
+                            <asp:Label ID="lblMob" runat="server" Font-Bold="True"></asp:Label>
+                        </p>
+                        <p class="sub-heading">
+                            Taluka,City,State:
+                            <asp:Label ID="lblState" runat="server" Text=""></asp:Label>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -146,13 +165,13 @@
             <div class="body-section">
                 <h3 class="heading">Ordered Items</h3>
                 <br>
-                <table class="table-bordered">
+                <%--<table class="table-bordered">
                     <thead>
                         <tr>
                             <th>Product</th>
                             <th class="w-20">Price</th>
                             <th class="w-20">Quantity</th>
-                            <th class="w-20">Grandtotal</th>
+                            <th class="w-20">Net Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,8 +180,114 @@
                             <td>10</td>
                             <td>1</td>
                             <td>10</td>
+                        </tr>--%>
+                <asp:Repeater ID="RepeatInformation" runat="server">
+                    <HeaderTemplate>
+                        <table class="table-bordered tblcolor">
+                            <tr>
+                                <b>
+                                    <td>Product  
+                                    </td>
+                                    <td class="w-20">Price
+                                    </td>
+                                    <td class="w-20">Quantity
+                                    </td>
+                                    <td class="w-20">Amount
+                                    </td>
+                                </b>
+                            </tr>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <tr class="tblrowcolor">
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.ProductName")%>  
+                            </td>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.Price")%>  
+                            </td>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.Quantity")%>  
+                            </td>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.Amount")%>  
+                            </td>
                         </tr>
+                    </ItemTemplate>
+                    <%--<SeparatorTemplate>
+                                <tr>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                </tr>
+                            </SeparatorTemplate>--%>
+                    <AlternatingItemTemplate>
                         <tr>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.ProductName")%>  
+                            </td>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.Price")%>  
+                            </td>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.Quantity")%>  
+                            </td>
+                            <td>
+                                <%#DataBinder.Eval(Container,"DataItem.Amount")%>  
+                            </td>
+                        </tr>
+                    </AlternatingItemTemplate>
+                    <%--<SeparatorTemplate>
+                                <tr>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                    <td>
+                                        <hr />
+                                    </td>
+                                </tr>
+                            </SeparatorTemplate>--%>
+                </asp:Repeater>
+                <table class="table-bordered tblcolor">
+                    <tr>
+                        <td class="text-right">Net Quantity</td>
+                        <td>
+                            <asp:Label ID="lblQty" runat="server" Text=""></asp:Label>
+                        </td>
+
+                        </td>
+                            <td class="text-right">Net Amount</td>
+                        <td>
+                            <asp:Label ID="lblAmt" runat="server" Text=""></asp:Label>
+                        </td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-right">Discount</td>
+                        <td>
+                            <asp:Label ID="lblDisc" runat="server" Text=""></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-right">Grand Total</td>
+                        <td>
+                            <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label></td>
+                    </tr>
+                </table>
+                <%--<tr>
                             <td colspan="3" class="text-right">Sub Total</td>
                             <td>10.XX</td>
                         </tr>
@@ -175,8 +300,8 @@
                             <td>12.XX</td>
                         </tr>
                     </tbody>
-                </table>
-                <br>
+                </table>--%>
+                <br />
                 <h3 class="heading">Payment Status: Paid</h3>
                 <h3 class="heading">Payment Mode: Cash on Delivery</h3>
             </div>

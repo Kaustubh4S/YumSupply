@@ -172,6 +172,14 @@ public partial class Manager_Bill : System.Web.UI.Page
             return;
         }
 
+        if (string.IsNullOrEmpty(txtDate.Text))
+        {
+            lblMsg.Text = "Please Select Date!";
+            lblMsg.ForeColor = System.Drawing.Color.Red;
+            txtDate.Focus();
+            return;
+        }
+
         if (ddlBrands.SelectedValue == "-1")
         {
             lblMsg.Text = "Please Select Brand!";
@@ -193,6 +201,14 @@ public partial class Manager_Bill : System.Web.UI.Page
             lblMsg.Text = "Please Select Product!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
             ddlProduct.Focus();
+            return;
+        }
+
+        if (string.IsNullOrEmpty(txtQty.Text))
+        {
+            lblMsg.Text = "Please Select Quantity!";
+            lblMsg.ForeColor = System.Drawing.Color.Red;
+            txtQty.Focus();
             return;
         }
 
@@ -229,9 +245,9 @@ public partial class Manager_Bill : System.Web.UI.Page
             LoadNetAmtNQty();
             Clears();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            throw ex;
         }
     }
 
@@ -300,6 +316,11 @@ public partial class Manager_Bill : System.Web.UI.Page
 
     protected void btmSubmit_Click(object sender, EventArgs e)
     {
+        if (Session["BillData"] == null)
+        {
+            lblMsg.Text = "Pleases Add Products!";
+            return;
+        }
         SqlConnection con = SQLHelper.GetConnection();
         con.Open();
         SqlTransaction tran = con.BeginTransaction();
@@ -384,6 +405,22 @@ public partial class Manager_Bill : System.Web.UI.Page
         {
             tran.Rollback();
             throw ex;
+        }
+    }
+
+    protected void grdBillView_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Del")
+        {
+            int index = Convert.ToInt32(e.CommandArgument.ToString());
+            List<BillData> lst = new List<BillData>();
+            lst = (List<BillData>)Session["BillData"];
+            lst.RemoveAt(index);
+            Session["BillData"] = lst;
+            grdBillView.DataSource = lst.ToList();
+            grdBillView.DataBind();
+            LoadNetAmtNQty();
+            Clears();
         }
     }
 }
