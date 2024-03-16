@@ -40,7 +40,7 @@
   <option value="AL">Alabama</option>
   <option value="WY">Wyoming</option>--%><%--</select>--%>
 
-            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+           <%-- <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
                     <ajaxToolkit:ComboBox ID="ddlBrand" runat="server" AutoCompleteMode="SuggestAppend" AutoPostBack="True" CssClass="btn btn-secondary dropdown-toggle w-75" DropDownStyle="DropDownList">
@@ -50,7 +50,7 @@
 
                 </ContentTemplate>
             </asp:UpdatePanel>
-        </div>
+        </div>--%>
     </form>
     <%-- <script>
         $(document).ready(function () {

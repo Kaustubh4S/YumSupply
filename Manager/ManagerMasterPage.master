@@ -67,7 +67,7 @@
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
                                     <%--<a class="" href="Users.aspx" >Users</a>--%>                                    <%--<asp:Label ID="Label1" CssClass="nav-link" Enabled="false" runat="server"  Text="Users"></asp:Label>--%>
-                                    <asp:LinkButton ID="lblbtnUsers" CssClass="nav-link" runat="server" OnClick="lblbtnUsers_Click" Visible="False">Users</asp:LinkButton>
+                                    <asp:LinkButton ID="lblbtnUsers" CssClass="nav-link" runat="server" OnClick="lblbtnUsers_Click" Visible="False" CausesValidation="False">Users</asp:LinkButton>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
