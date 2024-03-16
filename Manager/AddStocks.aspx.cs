@@ -166,6 +166,14 @@ public partial class Manager_AddStocks : System.Web.UI.Page
             return;
         }
 
+        if (txtQuantity.Text == "0")
+        {
+            lblMsg.Text = "Insert Valid Quantity!";
+            lblMsg.ForeColor = System.Drawing.Color.Red;
+            txtQuantity.Text = "";
+            txtQuantity.Focus();
+            return;
+        }
         string cmd = "SELECT InQuantity FROM Stocks WHERE (ProductID = @0)";
         int inQty = SQLHelper.getID(cmd, ddlProduct.SelectedValue);
         if (inQty > 0)
