@@ -38,15 +38,6 @@ public partial class Manager_Products : System.Web.UI.Page
             PID = SQLHelper.getID(cmdCheck, txtProductName.Text, ddlBrand.SelectedValue);
             cmdInsertOrUpdate = "INSERT INTO Product (ProductName, BrandID, CategoryID, Price, Date) VALUES (@0, @1, @2, @3, @4)";
             lblMsg.Text = "Product " + SQLHelper.Commit(PID, cmdInsertOrUpdate, 0, txtProductName.Text, ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text, DateTime.Now);
-
-            //PID = SQLHelper.getID(cmdCheck, txtProductName.Text, ddlBrand.SelectedValue);
-            //if (PID != 0)
-            //{
-            //    cmdCheck = "SELECT AddStockID FROM AddStocks WHERE (ProductID=@0);";
-            //    int PID1 = SQLHelper.getID(cmdCheck, PID);
-            //    cmdInsertOrUpdate = "INSERT INTO AddStocks(ProductID, CategoryID, BrandID, Quantity) VALUES(@0, @1, @2, @3);";
-            //    lblMsg.Text = "Product " + SQLHelper.Commit(PID1, cmdInsertOrUpdate, 0, PID, ddlCategory.SelectedValue, ddlBrand.SelectedValue, txtQuantity.Text);
-            //}
             Clears();
         }
         else
@@ -65,8 +56,6 @@ public partial class Manager_Products : System.Web.UI.Page
         txtProductName.Text = "";
         txtProductName.Focus();
         txtPrice.Text = "";
-        //txtQuantity.Text = "";
-        //txtQuantity.ReadOnly = false;
         ddlBrand.SelectedIndex = -1;
         ddlCategory.SelectedIndex = -1;
         grdProducts.DataBind();
@@ -83,11 +72,7 @@ public partial class Manager_Products : System.Web.UI.Page
             txtProductName.Text = grdProducts.Rows[index].Cells[1].Text;
             ddlCategory.SelectedValue = ddlCategory.Items.FindByText(grdProducts.Rows[index].Cells[2].Text).Value;
             ddlBrand.SelectedValue = ddlBrand.Items.FindByText(grdProducts.Rows[index].Cells[3].Text).Value;
-            //ddlBrand.SelectedValue = getID("SELECT BrandID FROM Brands WHERE BrandName='" + grdProducts.Rows[index].Cells[2].Text + "';");
-            //ddlCategory.SelectedValue = getID("SELECT CategoryID FROM Category WHERE CategoryName='" + grdProducts.Rows[index].Cells[3].Text + "';");
             txtPrice.Text = grdProducts.Rows[index].Cells[4].Text;
-            //txtQuantity.Text = grdProducts.Rows[index].Cells[5].Text;
-            //txtQuantity.ReadOnly = true;
             txtPrice.Text = grdProducts.Rows[index].Cells[4].Text;
             btnAdd.Text = "Update";
         }

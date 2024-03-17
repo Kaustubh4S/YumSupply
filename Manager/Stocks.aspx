@@ -9,7 +9,7 @@
         <hr />
     </div>
 
-    <div class=" card-body text-dark bg-light mb-3">
+    <div class="card-body text-dark bg-light mb-3">
         <table class="w-100 mt-3">
             <tr class="w-25">
                 <td>
