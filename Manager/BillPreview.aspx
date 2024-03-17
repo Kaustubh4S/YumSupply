@@ -110,6 +110,8 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+        <asp:Button ID="btnPrint" runat="server" OnClick="btnPrint_Click" Text="Print" />
+        <asp:HiddenField ID="HiddenField1" runat="server" />
     <asp:Panel ID="Panel1" runat="server">
         <div class="container">
             <div class="brand-section">
@@ -313,7 +315,6 @@
                 </p>
             </div>
         </div>
-        <asp:HiddenField ID="HiddenField1" runat="server" />
     </asp:Panel>
 </asp:Content>
 
