@@ -10,8 +10,6 @@ public partial class Manager_ChangePassword : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(Session["UserID"].ToString()) || !(Session["RoleId"].ToString() == "1"))
-            Response.Redirect("~/Default.aspx");
     }
 
     protected void btnUpdate_Click(object sender, EventArgs e)
@@ -26,18 +24,20 @@ public partial class Manager_ChangePassword : System.Web.UI.Page
             {
                 try
                 {
-                    DataTable dt = SQLHelper.FillData("SELECT Password FROM Users WHERE UserID=" + Session["UserID"].ToString() + ";");
-                    if (txtPassword1.Text == dt.Rows[0]["Password"].ToString())
+                    if (txtPassword1.Text == Session["Password"].ToString())
                     {
                         ShowErrors("Password can not be Same as Old!");
                         txtPassword1.Focus();
                     }
                     else
                     {
-                        SQLHelper.ExecuteNonQuery("UPDATE Users SET Password = '" + txtPassword1.Text + "' WHERE UserID=" + Session["UserID"].ToString() + ";");
-                        DataTable dt0 = SQLHelper.FillData("SELECT Password FROM Users WHERE UserID=" + Session["UserID"].ToString() + ";");
+                        string strCmd = "UPDATE Users SET Password = @0 WHERE UserID=@1";
+                        SQLHelper.ExecuteQuery(strCmd, txtPassword1.Text, Session["UserID"].ToString());
+                        Session["Password"] = txtPassword1.Text;
 
-                        if (dt0.Rows[0]["Password"].ToString() == txtPassword1.Text)
+                        strCmd = "SELECT Password FROM Users WHERE UserID=@0";
+                        DataTable dt = SQLHelper.FillData(strCmd, Session["UserID"].ToString());
+                        if (dt.Rows[0]["Password"].ToString() == Session["Password"].ToString())
                         {
                             lblSucess.Text = "Sucessfully Updated";
                             divSucess.Visible = true;
