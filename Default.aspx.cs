@@ -17,21 +17,28 @@ public partial class _Default : System.Web.UI.Page
     {
         try
         {
-            string strCmd = "SELECT  UserID, Password, RoleId, FullName FROM Users WHERE(UserName=@0)";
+            string strCmd = "SELECT  UserID, Password, RoleId, FullName, Active FROM Users WHERE(UserName=@0)";
             DataTable dt = SQLHelper.FillData(strCmd, txtUserName.Text);
             if (dt.Rows.Count > 0)
             {
                 string strPassword = dt.Rows[0]["Password"].ToString();
                 if (strPassword == txtPassword.Text)
                 {
-                    Session["UserID"] = dt.Rows[0]["UserID"].ToString();
-                    Session["RoleId"] = dt.Rows[0]["RoleId"].ToString();
-                    Session["FullName"] = dt.Rows[0]["FullName"].ToString();
-                    Session["Password"] = dt.Rows[0]["Password"].ToString();
-                    if (Session["RoleId"].ToString() == "1")
-                        Response.Redirect("~/Manager/Home.aspx");
-                    if (Session["RoleId"].ToString() == "2")
-                        Response.Redirect("~/Biller/Home.aspx");
+                    string strActive = dt.Rows[0]["Active"].ToString();
+                    if (strActive == "True")
+                    {
+                        Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                        Session["RoleId"] = dt.Rows[0]["RoleId"].ToString();
+                        Session["FullName"] = dt.Rows[0]["FullName"].ToString();
+                        Session["Password"] = dt.Rows[0]["Password"].ToString();
+                        Session["Active"] = dt.Rows[0]["Active"].ToString();
+                        if (Session["RoleId"].ToString() == "1")
+                            Response.Redirect("~/Manager/Home.aspx");
+                        if (Session["RoleId"].ToString() == "2")
+                            Response.Redirect("~/Biller/Home.aspx");
+                    }
+                    else
+                        ShowErrors("User is Not Active!");
                 }
                 else
                 {

@@ -27,6 +27,7 @@
         Session["RoleId"] = "";
         Session["FullName"] = "";
         Session["Password"] = "";
+        Session["Active"] = "";
         Session["BillData"] = null;
     }
 
