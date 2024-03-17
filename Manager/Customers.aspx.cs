@@ -9,8 +9,6 @@ public partial class Manager_Customers : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(Session["UserID"].ToString()) || !(Session["RoleId"].ToString() == "1"))
-            Response.Redirect("~/Default.aspx");
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
