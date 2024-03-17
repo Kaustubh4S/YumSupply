@@ -9,8 +9,6 @@ public partial class Manager_Users : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(Session["UserID"].ToString()) || !(Session["RoleId"].ToString() == "1"))
-            Response.Redirect("~/Default.aspx");
         if (!(Session["UserID"].ToString() == "1"))
             Response.Redirect("~/Manager/Home.aspx");//prevents from accessing throught url
     }
@@ -54,8 +52,8 @@ public partial class Manager_Users : System.Web.UI.Page
                 else
                 {
                     //update
-                    cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0 and UserID=@1);";
-                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text, HiddenField1.Value);
+                    cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0 and UserID=@1 and RoleId=@2 and FullName=@3 and Active=@4);";
+                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text, HiddenField1.Value, ddlRole.SelectedValue, txtFullName.Text, binary);
                     cmdInsertOrUpdate = "update Users set UserName=@0, Password=@1, RoleId=@2, FullName=@3, Dated=@4, Active=@5 where UserID=@6";
                     lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtUserName.Text, txtPassword1.Text, ddlRole.SelectedValue, txtFullName.Text, DateTime.Now, binary, HiddenField1.Value);
                     Clears();
@@ -100,7 +98,8 @@ public partial class Manager_Users : System.Web.UI.Page
             txtUserName.Text = grdUsers.Rows[index].Cells[2].Text;
             txtPassword1.Text = grdUsers.Rows[index].Cells[3].Text;
             ddlRole.SelectedValue = ddlRole.Items.FindByText(grdUsers.Rows[index].Cells[4].Text).Value;
-            chbActive = (CheckBox)grdUsers.Rows[index].FindControl("Active");
+            CheckBox chk = (CheckBox)grdUsers.Rows[index].Controls[0].FindControl("CheckBox1");
+            chbActive.Checked = chk.Checked;
             btnAdd.Text = "Update";
         }
     }

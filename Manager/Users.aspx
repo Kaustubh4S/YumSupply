@@ -83,7 +83,7 @@
                     <div class="form-data forms-inputs col-auto mt-2">
                         <span>UserName</span>
                         <asp:TextBox ID="txtUserName" runat="server" CssClass="w-75" TextMode="SingleLine"></asp:TextBox>
-                        <ajaxToolkit:FilteredTextBoxExtender ID="txtUserName_FilteredTextBoxExtender" runat="server" BehaviorID="txtUserName_FilteredTextBoxExtender" TargetControlID="txtUserName" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm" />
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtUserName_FilteredTextBoxExtender" runat="server" BehaviorID="txtUserName_FilteredTextBoxExtender" TargetControlID="txtUserName" ValidChars="QWERTYUIOPLKJHGFDSAZXCVBNMqwertyuioplkjhgfdsazxcvbnm0123456789" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtUserName" Display="Dynamic" ErrorMessage="UserName can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -163,7 +163,14 @@
                 <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
                 <asp:BoundField DataField="RoleName" HeaderText="Role Name" SortExpression="RoleName" />
                 <asp:BoundField DataField="Dated" HeaderText="Dated" SortExpression="Dated" DataFormatString="{0:dd-MMMM-yyyy}" />
-                <asp:CheckBoxField DataField="Active" HeaderText="Active" SortExpression="Active" />
+                <asp:TemplateField HeaderText="Active" SortExpression="Active">
+                    <EditItemTemplate>
+                        <asp:CheckBox ID="CheckBox1" runat="server" Checked='<%# Bind("Active") %>' />
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:CheckBox ID="CheckBox1" runat="server" Checked='<%# Bind("Active") %>' Enabled="False" />
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:ButtonField CommandName="up" HeaderText="Update" ShowHeader="True" Text="Update" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
