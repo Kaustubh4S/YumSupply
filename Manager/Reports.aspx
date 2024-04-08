@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manager/ManagerMasterPage.master" AutoEventWireup="true" CodeFile="Reports.aspx.cs" Inherits="Manager_Reports" %>
+﻿<%@ Page Title="Reports" Language="C#" MasterPageFile="~/Manager/ManagerMasterPage.master" AutoEventWireup="true" CodeFile="Reports.aspx.cs" Inherits="Manager_Reports" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="../Content/defaultLogin.css" rel="stylesheet" />
@@ -32,12 +32,27 @@
                     </div>
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    <div class="form-data forms-inputs col-auto mt-4">
+                        <span>From Date</span>
+                        <asp:TextBox ID="txtFromDate" runat="server" CssClass="w-75" TextMode="Date" ValidationGroup="ConfirmBeforeAdd" CausesValidation="True" AutoPostBack="True" OnTextChanged="txtFromDate_TextChanged"></asp:TextBox>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-data forms-inputs col-auto mt-4">
+                        <span>To Date</span>
+                        <asp:TextBox ID="txtToDate" runat="server" CssClass="w-75" TextMode="Date" ValidationGroup="ConfirmBeforeAdd" CausesValidation="True" AutoPostBack="True" OnTextChanged="txtToDate_TextChanged"></asp:TextBox>
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
     <br />
 
     <div class=" card-body text-dark bg-light mb-4">
-        <asp:GridView ID="grdReports" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True">
+        <asp:GridView ID="grdReports" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" EmptyDataText="Record not found" GridLines="Horizontal" AllowSorting="True">
             <AlternatingRowStyle BackColor="Silver" />
             <Columns>
                 <asp:BoundField DataField="ProductID" HeaderText="Product ID" />
@@ -47,7 +62,7 @@
                 <asp:BoundField DataField="Price" HeaderText="Selled Price" />
                 <asp:BoundField DataField="Quantity" HeaderText="Selled Quantity" />
                 <asp:BoundField DataField="NetAmt" HeaderText="Total Amount" />
-                <asp:BoundField DataField="Dated" HeaderText="Sell Date" DataFormatString="{0:dd-MMMM-yyyy}"/>
+                <asp:BoundField DataField="Dated" HeaderText="Sell Date" DataFormatString="{0:dd-MMMM-yyyy}" />
                 <asp:BoundField DataField="Qty" HeaderText="Reamining Quantity" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />

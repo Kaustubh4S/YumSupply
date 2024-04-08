@@ -32,8 +32,8 @@ public partial class Manager_ChangePassword : System.Web.UI.Page
                     else
                     {
                         string strCmd = "UPDATE Users SET Password = @0 WHERE UserID=@1";
-                        SQLHelper.ExecuteQuery(strCmd, txtPassword1.Text, Session["UserID"].ToString());
-                        Session["Password"] = txtPassword1.Text;
+                        SQLHelper.ExecuteQuery(strCmd, txtPassword1.Text.Trim(), Session["UserID"].ToString());
+                        Session["Password"] = txtPassword1.Text.Trim();
 
                         strCmd = "SELECT Password FROM Users WHERE UserID=@0";
                         DataTable dt = SQLHelper.FillData(strCmd, Session["UserID"].ToString());

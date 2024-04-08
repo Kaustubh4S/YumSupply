@@ -58,7 +58,7 @@
     </div>
     <br />
     <div class=" card-body text-dark bg-light mb-4">
-        <asp:GridView ID="grdAddStocks" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal" AllowSorting="True">
+        <asp:GridView ID="grdAddStocks" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" CssClass="table table-hover" ForeColor="Black" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" EmptyDataText="Record not found" GridLines="Horizontal" AllowSorting="True">
             <AlternatingRowStyle BackColor="Silver" />
             <Columns>
                 <asp:BoundField DataField="ProductID" HeaderText="Product ID" InsertVisible="False" ReadOnly="True" SortExpression="StockID" />

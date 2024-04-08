@@ -15,6 +15,7 @@
 <body style="background: #D2CEC9">
     <form id="form1" runat="server">
         <div>
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="Home.aspx">
@@ -30,18 +31,16 @@
                                 <a class="nav-link active" aria-current="page" href="Home.aspx">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="../Manager/Products.aspx">Products</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manage
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="Brands.aspx">Brands</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="Products.aspx">Products</a></li>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../Manager/AddStocks.aspx">Add Stocks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../Manager/Customers.aspx">Customers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../Manager/Bill.aspx">Bill</a>
                             </li>
                         </ul>
                         <div class="d-flex ">
@@ -51,9 +50,9 @@
                                         <asp:Label ID="lblFullName" runat="server"></asp:Label>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="ChangePassword.aspx">Change Password</a></li>
+                                        <li><a class="dropdown-item" href="../Manager/ChangePassword.aspx">Change Password</a></li>
                                         <li>
-                                            <hr class="dropdown-divider">
+                                            <hr class="dropdown-divider" />
                                         </li>
                                         <li>
                                             <asp:Button ID="btnLogout" runat="server" CausesValidation="false" CssClass="dropdown-item btn btn-sm btn-warning" Text="Log Out!" OnClick="btnLogout_Click" />
@@ -66,8 +65,12 @@
                 </div>
             </nav>
             <div class="container mt-3">
-                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                </asp:ContentPlaceHolder>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
     </form>

@@ -44,18 +44,18 @@ public partial class Manager_Users : System.Web.UI.Page
                 {
                     //save
                     cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0);";
-                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text);
+                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text.Trim());
                     cmdInsertOrUpdate = "INSERT INTO Users (UserName, Password, RoleId, FullName, Dated, Active) VALUES (@0, @1, @2, @3, @4, @5)";
-                    lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtUserName.Text, txtPassword1.Text, ddlRole.SelectedValue, txtFullName.Text, DateTime.Now, binary);
+                    lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtUserName.Text.Trim(), txtPassword1.Text.Trim(), ddlRole.SelectedValue, txtFullName.Text.Trim(), DateTime.Now, binary);
                     Clears();
                 }
                 else
                 {
                     //update
                     cmdCheck = "SELECT UserID FROM Users WHERE (UserName=@0 and UserID=@1 and RoleId=@2 and FullName=@3 and Active=@4);";
-                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text, HiddenField1.Value, ddlRole.SelectedValue, txtFullName.Text, binary);
+                    ID = SQLHelper.getID(cmdCheck, txtUserName.Text.Trim(), HiddenField1.Value, ddlRole.SelectedValue, txtFullName.Text.Trim(), binary);
                     cmdInsertOrUpdate = "update Users set UserName=@0, Password=@1, RoleId=@2, FullName=@3, Dated=@4, Active=@5 where UserID=@6";
-                    lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtUserName.Text, txtPassword1.Text, ddlRole.SelectedValue, txtFullName.Text, DateTime.Now, binary, HiddenField1.Value);
+                    lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtUserName.Text.Trim(), txtPassword1.Text.Trim(), ddlRole.SelectedValue, txtFullName.Text.Trim(), DateTime.Now, binary, HiddenField1.Value);
                     Clears();
                 }
             }

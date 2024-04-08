@@ -64,6 +64,7 @@
                     <div class="form-data forms-inputs col-auto mt-4">
                         <span>Quantity</span>
                         <asp:TextBox ID="txtQty" runat="server" CssClass="w-75" TextMode="Number" ValidationGroup="ConfirmBeforeAdd"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtQty_FilteredTextBoxExtender" runat="server" BehaviorID="txtQty_FilteredTextBoxExtender" TargetControlID="txtQty" ValidChars="1234567890" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Quantity should not be Empty" ControlToValidate="txtQty" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>

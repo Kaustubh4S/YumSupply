@@ -1,7 +1,28 @@
 ﻿<%@ Page Title="Bill Preview" Language="C#" MasterPageFile="~/Manager/ManagerMasterPage.master" AutoEventWireup="true" CodeFile="BillPreview.aspx.cs" Inherits="Manager_BillPreview" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <style>
+    
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script language="javascript">
+        function printpanel() {
+            var panel1 = document.getElementById("<%=Panel1.ClientID%>");
+            var printWindow = window.open('', '', 'height=3500,width=2480');
+            printWindow.document.write('<html><head><title>Bill</title>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(panel1.innerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            setTimeout(function () {
+                printWindow.print();
+            }, 500);
+            return false;
+        }
+</script>
+    <asp:Button ID="Button1" runat="server" Text="Print" OnClientClick="return printpanel();" />
+        <asp:HiddenField ID="HiddenField1" runat="server" />
+    <asp:Panel ID="Panel1" runat="server">
+        <style>
         body {
             background-color: #F6F6F6;
             margin: 0;
@@ -108,11 +129,6 @@
             float: right;
         }
     </style>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-        <asp:Button ID="btnPrint" runat="server" OnClick="btnPrint_Click" Text="Print" />
-        <asp:HiddenField ID="HiddenField1" runat="server" />
-    <asp:Panel ID="Panel1" runat="server">
         <div class="container">
             <div class="brand-section">
                 <div class="row">
@@ -167,22 +183,6 @@
             <div class="body-section">
                 <h3 class="heading">Ordered Items</h3>
                 <br>
-                <%--<table class="table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th class="w-20">Price</th>
-                            <th class="w-20">Quantity</th>
-                            <th class="w-20">Net Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Product Name</td>
-                            <td>10</td>
-                            <td>1</td>
-                            <td>10</td>
-                        </tr>--%>
                 <asp:Repeater ID="RepeatInformation" runat="server">
                     <HeaderTemplate>
                         <table class="table-bordered tblcolor">
@@ -215,22 +215,6 @@
                             </td>
                         </tr>
                     </ItemTemplate>
-                    <%--<SeparatorTemplate>
-                                <tr>
-                                    <td>
-                                        <hr />
-                                    </td>
-                                    <td>
-                                        <hr />
-                                    </td>
-                                    <td>
-                                        <hr />
-                                    </td>
-                                    <td>
-                                        <hr />
-                                    </td>
-                                </tr>
-                            </SeparatorTemplate>--%>
                     <AlternatingItemTemplate>
                         <tr>
                             <td>
@@ -289,20 +273,6 @@
                             <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label></td>
                     </tr>
                 </table>
-                <%--<tr>
-                            <td colspan="3" class="text-right">Sub Total</td>
-                            <td>10.XX</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" class="text-right">Tax Total %1X</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" class="text-right">Grand Total</td>
-                            <td>12.XX</td>
-                        </tr>
-                    </tbody>
-                </table>--%>
                 <br />
                 <h3 class="heading">Payment Status: Paid</h3>
                 <h3 class="heading">Payment Mode: Cash on Delivery</h3>

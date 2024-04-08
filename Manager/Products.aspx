@@ -50,14 +50,6 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Price should not be Empty" ControlToValidate="txtPrice" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>
-
-                <%--<td>
-                    <div class="form-data forms-inputs col-auto">
-                        <span>Quantity</span>
-                        <asp:TextBox ID="txtQuantity" runat="server" CssClass="w-75" TextMode="Number"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Quantity should not be Empty" ControlToValidate="txtQuantity" Display="Dynamic" Font-Bold="True" ForeColor="Red" SetFocusOnError="True"></asp:RequiredFieldValidator>
-                    </div>
-                </td>--%>
             </tr>
 
             <tr>

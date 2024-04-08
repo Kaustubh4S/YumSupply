@@ -20,17 +20,17 @@ public partial class Manager_Category : System.Web.UI.Page
         if (HiddenField1.Value == "")
         {
             cmdCheck = "SELECT CategoryID FROM Category WHERE CategoryName=@0;";
-            ID = SQLHelper.getID(cmdCheck, txtCategory.Text);
+            ID = SQLHelper.getID(cmdCheck, txtCategory.Text.Trim());
             cmdInsertOrUpdate = "INSERT INTO Category(CategoryName) VALUES(@0)";
-            lblMsg.Text = "Category " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtCategory.Text);
+            lblMsg.Text = "Category " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtCategory.Text.Trim());
             Clears();
         }
         else
         {
-            cmdCheck = "SELECT CategoryID FROM Category WHERE (CategoryName=@0 and CategoryID=@1);";
-            ID = SQLHelper.getID(cmdCheck, txtCategory.Text, HiddenField1.Value);
+            cmdCheck = "SELECT CategoryID FROM Category WHERE (CategoryName=@0);";
+            ID = SQLHelper.getID(cmdCheck, txtCategory.Text.Trim(), HiddenField1.Value);
             cmdInsertOrUpdate = "update Category set CategoryName=@0 where CategoryID=@1";
-            lblMsg.Text = "Category " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtCategory.Text, HiddenField1.Value);
+            lblMsg.Text = "Category " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtCategory.Text.Trim(), HiddenField1.Value);
             Clears();
         }
     }

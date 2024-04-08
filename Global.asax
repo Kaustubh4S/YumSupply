@@ -28,6 +28,7 @@
         Session["FullName"] = "";
         Session["Password"] = "";
         Session["Active"] = "";
+        Session["Master"] = "";
         Session["BillData"] = null;
     }
 

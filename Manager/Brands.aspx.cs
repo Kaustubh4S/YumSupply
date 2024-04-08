@@ -20,17 +20,17 @@ public partial class Manager_Brands : System.Web.UI.Page
         if (HiddenField1.Value == "")
         {
             cmdCheck = "SELECT BrandID FROM Brands WHERE BrandName=@0;";
-            ID = SQLHelper.getID(cmdCheck, txtBrandName.Text);
+            ID = SQLHelper.getID(cmdCheck, txtBrandName.Text.Trim());
             cmdInsertOrUpdate = "INSERT INTO Brands(BrandName) VALUES(@0)";
-            lblMsg.Text = "Brand " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtBrandName.Text);
+            lblMsg.Text = "Brand " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtBrandName.Text.Trim());
             Clears();
         }
         else
         {
-            cmdCheck = "SELECT BrandID FROM Brands WHERE (BrandName=@0 and BrandID=@1)";
-            ID = SQLHelper.getID(cmdCheck, txtBrandName.Text, HiddenField1.Value);
+            cmdCheck = "SELECT BrandID FROM Brands WHERE (BrandName=@0)";
+            ID = SQLHelper.getID(cmdCheck, txtBrandName.Text.Trim(), HiddenField1.Value);
             cmdInsertOrUpdate = "update Brands set BrandName=@0 where BrandID=@1";
-            lblMsg.Text = "Brand" + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtBrandName.Text, HiddenField1.Value);
+            lblMsg.Text = "Brand" + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtBrandName.Text.Trim(), HiddenField1.Value);
             Clears();
         }
     }

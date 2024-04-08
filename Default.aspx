@@ -15,7 +15,9 @@
     <form runat="server">
         <div class="container  mt-5 ">
             <div class="row d-flex justify-content-center">
-                <div class="col-md-5 mar">
+                <div class="col-md-5">
+                    <h1 style="color:white">Yum Supply</h1>
+                    <div class="mar">
                     <div class="card px-5 py-5" id="form1">
                         <div class="form-data">
                             <div class="forms-inputs mb-4">
@@ -46,6 +48,7 @@
                             </div>
                         </div>
                     </div>
+                        </div>
                 </div>
             </div>
         </div>

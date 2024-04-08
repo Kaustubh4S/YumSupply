@@ -16,22 +16,29 @@ public partial class Manager_Customers : System.Web.UI.Page
         string cmdCheck, cmdInsertOrUpdate;
         int ID;
 
+        if(!(txtMobile.Text.Length==10))
+        {
+            lblMsg.Text = "Enter Valid Mobile Number!";
+            txtMobile.Focus();
+            return;
+        }
+
         if (HiddenField1.Value == "")
         {
             //save
             cmdCheck = "SELECT CustomerID FROM Customer WHERE (CustomerName=@0 and MobileNumber=@1);";
-            ID = SQLHelper.getID(cmdCheck, txtCustName.Text, txtMobile.Text);
+            ID = SQLHelper.getID(cmdCheck, txtCustName.Text.Trim(), txtMobile.Text.Trim());
             cmdInsertOrUpdate = "INSERT INTO Customer (CustomerName, AddressLine1, AddressLine2, StateName, DistrictName, TalukaName, MobileNumber, Discount) VALUES (@0, @1, @2, @3, @4, @5, @6, @7)";
-            lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtCustName.Text, txtAddress1.Text, txtAddress2.Text, txtState.Text, txtCity.Text, txtTaluka.Text, txtMobile.Text, txtDisc.Text);
+            lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 0, txtCustName.Text.Trim(), txtAddress1.Text.Trim(), txtAddress2.Text.Trim(), txtState.Text.Trim(), txtCity.Text.Trim(), txtTaluka.Text.Trim(), txtMobile.Text.Trim(), txtDisc.Text.Trim());
             Clears();
         }
         else
         {
             //update
-            cmdCheck = "SELECT CustomerID FROM Customer WHERE (CustomerName=@0 and CustomerID=@1);";
-            ID = SQLHelper.getID(cmdCheck, txtCustName.Text, HiddenField1.Value);
+            cmdCheck = "SELECT CustomerID FROM Customer WHERE (CustomerName=@0 and MobileNumber=@1 );";
+            ID = SQLHelper.getID(cmdCheck, txtCustName.Text.Trim(), txtMobile.Text.Trim());
             cmdInsertOrUpdate = "update Customer set CustomerName=@0, AddressLine1=@1, AddressLine2=@2, StateName=@3, DistrictName=@4, TalukaName=@5, MobileNumber=@6, Discount=@7 where CustomerID=@8";
-            lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtCustName.Text, txtAddress1.Text, txtAddress2.Text, txtState.Text, txtCity.Text, txtTaluka.Text, txtMobile.Text, txtDisc.Text, HiddenField1.Value);
+            lblMsg.Text = "User " + SQLHelper.Commit(ID, cmdInsertOrUpdate, 1, txtCustName.Text.Trim(), txtAddress1.Text.Trim(), txtAddress2.Text.Trim(), txtState.Text.Trim(), txtCity.Text.Trim(), txtTaluka.Text.Trim(), txtMobile.Text.Trim(), txtDisc.Text.Trim(), HiddenField1.Value);
             Clears();
         }
     }

@@ -18,7 +18,7 @@ public partial class _Default : System.Web.UI.Page
         try
         {
             string strCmd = "SELECT  UserID, Password, RoleId, FullName, Active FROM Users WHERE(UserName=@0)";
-            DataTable dt = SQLHelper.FillData(strCmd, txtUserName.Text);
+            DataTable dt = SQLHelper.FillData(strCmd, txtUserName.Text.Trim());
             if (dt.Rows.Count > 0)
             {
                 string strPassword = dt.Rows[0]["Password"].ToString();

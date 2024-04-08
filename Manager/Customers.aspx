@@ -25,6 +25,7 @@
                     <div class="form-data forms-inputs col-auto mt-2">
                         <span>Mobile Number</span>
                         <asp:TextBox ID="txtMobile" runat="server" CssClass="w-75" TextMode="Number" MaxLength="10"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="txtMobile_FilteredTextBoxExtender" runat="server" BehaviorID="txtMobile_FilteredTextBoxExtender" TargetControlID="txtMobile" ValidChars="0123456789" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtMobile" Display="Dynamic" ErrorMessage="Mobile Number can not be Empty" Font-Bold="True" SetFocusOnError="True" ForeColor="Red"></asp:RequiredFieldValidator>
                     </div>
                 </td>

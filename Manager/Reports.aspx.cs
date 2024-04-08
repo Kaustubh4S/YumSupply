@@ -34,9 +34,13 @@ public partial class Manager_Reports : System.Web.UI.Page
             strCmd += " and Stocks.CategoryID= @1 ";
         if (ddlProduct.SelectedValue != "-1")
             strCmd += " and Stocks.ProductID= @2";
+        if (!(string.IsNullOrEmpty(txtFromDate.Text)))
+            strCmd += " and SellParent.Dated>=@3 ";
+        if (!(string.IsNullOrEmpty(txtToDate.Text)))
+            strCmd += " and SellParent.Dated<=@4 ";
         strCmd += " GROUP BY Product.ProductID, Product.ProductName, Category.CategoryName, Brands.BrandName,SellChild.Price, SellChild.Quantity, SellParent.Dated " +
             " ORDER BY Product.ProductName";
-        DataTable dt = SQLHelper.FillData(strCmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue, ddlProduct.SelectedValue);
+        DataTable dt = SQLHelper.FillData(strCmd, ddlBrand.SelectedValue, ddlCategory.SelectedValue, ddlProduct.SelectedValue, txtFromDate.Text.Trim(), txtToDate.Text.Trim());
         grdReports.DataSource = dt;
         grdReports.DataBind();
     }
@@ -131,6 +135,16 @@ public partial class Manager_Reports : System.Web.UI.Page
                 ddlBrand.SelectedValue = id.ToString();
             }
         }
+        LoadgrdReports();
+    }
+
+    protected void txtFromDate_TextChanged(object sender, EventArgs e)
+    {
+        LoadgrdReports();
+    }
+
+    protected void txtToDate_TextChanged(object sender, EventArgs e)
+    {
         LoadgrdReports();
     }
 }

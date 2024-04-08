@@ -41,14 +41,6 @@ public partial class Manager_BillPreview : System.Web.UI.Page
         }
     }
 
-    static void LoadPdf(string website, string destinationFile)
-    {
-        ProcessStartInfo startInfo = new ProcessStartInfo();
-        startInfo.FileName = "~/Bin/wkhtmltopdf/bin/wkhtmltopdf.exe";
-        startInfo.Arguments = website + " " + destinationFile;
-        Process.Start(startInfo);
-    }
-
     private void LoadCustomer()
     {
         int SID = getSellId();
@@ -96,24 +88,5 @@ public partial class Manager_BillPreview : System.Web.UI.Page
         double disc = Convert.ToDouble(dt.Rows[0]["Discount"].ToString());
 
         lblTotal.Text = (netAmt - ((netAmt) * (disc / 100))).ToString();
-    }
-
-    protected void btnPrint_Click(object sender, EventArgs e)
-    {
-        Response.ContentType = "application/pdf";
-        Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
-        Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        StringWriter sw = new StringWriter();
-        HtmlTextWriter hw = new HtmlTextWriter(sw);
-        Panel1.RenderControl(hw);
-        StringReader sr = new StringReader(sw.ToString());
-        Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
-        HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
-        PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
-        pdfDoc.Open();
-        htmlparser.Parse(sr);
-        pdfDoc.Close();
-        Response.Write(pdfDoc);
-        Response.End();
     }
 }

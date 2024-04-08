@@ -202,9 +202,9 @@ public partial class Manager_Bill : System.Web.UI.Page
             return;
         }
 
-        if (string.IsNullOrEmpty(txtQty.Text))
+        if (string.IsNullOrEmpty(txtQty.Text) || txtQty.Text=="0")
         {
-            lblMsg.Text = "Please Select Quantity!";
+            lblMsg.Text = "Please Enter Valid Quantity!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
             txtQty.Focus();
             return;
@@ -213,6 +213,14 @@ public partial class Manager_Bill : System.Web.UI.Page
         if ((Convert.ToInt32(txtRemQty.Text) - Convert.ToInt32(txtQty.Text)) < 0)
         {
             lblMsg.Text = "Quantity Can not Exceed!";
+            lblMsg.ForeColor = System.Drawing.Color.Red;
+            txtQty.Focus();
+            return;
+        }
+
+        if (string.IsNullOrEmpty(txtPrice.Text) || txtPrice.Text=="0")
+        {
+            lblMsg.Text = "Price can not be Zero!";
             lblMsg.ForeColor = System.Drawing.Color.Red;
             txtQty.Focus();
             return;
@@ -236,7 +244,24 @@ public partial class Manager_Bill : System.Web.UI.Page
             {
                 lst = (List<BillData>)Session["BillData"];
             }
-            lst.Add(billData);
+            bool isFound = false;
+            for(int i=0;i<lst.Count;i++)
+            {
+                if(lst[i].ProductID==billData.ProductID)
+                {
+                    lst[i].Qty += billData.Qty;
+                    if(lst[i].Price==billData.Price)
+                    {
+                        lst[i].NetAmout += billData.NetAmout;
+                        isFound = true;
+                    }
+                    break;
+                }
+            }
+            if(!isFound)
+            {
+                lst.Add(billData);
+            }
             Session["BillData"] = lst;
             grdBillView.DataSource = lst.ToList();
             grdBillView.DataBind();
