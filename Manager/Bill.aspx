@@ -22,7 +22,20 @@
                 <td>
                     <div class="form-data forms-inputs col-auto">
                         <span>Date</span>
-                        <asp:TextBox ID="txtDate" runat="server" CssClass="w-75" TextMode="Date" ValidationGroup="ConfirmBeforeAdd" CausesValidation="True"></asp:TextBox>
+                        <asp:TextBox ID="txtDate" runat="server" CssClass="w-75" ValidationGroup="ConfirmBeforeAdd" CausesValidation="True" TextMode="Date" onkeyup="disableFuturxeDates()"></asp:TextBox>
+                        <script type="text/javascript">
+                            function disableFutureDates() {
+                                var dateTextBox = document.getElementById('<%= txtDate.ClientID %>');
+        var currentDate = new Date();
+        var maxDate = new Date(currentDate);  // Set your desired maximum date
+
+        // Disable future dates
+        dateTextBox.max = maxDate.toISOString().split('T')[0];
+
+        // Set the initial value to today's date
+        dateTextBox.value = currentDate.toISOString().split('T')[0];
+    }
+                        </script>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtDate" Display="Dynamic" ErrorMessage="Select Date" ForeColor="Red" SetFocusOnError="True" Font-Bold="True"></asp:RequiredFieldValidator>
                     </div>
                 </td>
@@ -119,7 +132,7 @@
 
         <table class="w-100">
             <tr>
-                <td >
+                <td>
                     <div class="form-data">
                         Toatal Quantity :
                         <asp:Label ID="lblQty" runat="server" Font-Bold="True" />
