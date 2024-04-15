@@ -31,16 +31,16 @@
                                 <a class="nav-link active" aria-current="page" href="Home.aspx">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../Manager/Products.aspx">Products</a>
+                                <a class="nav-link" href="../Biller/Products.aspx">Products</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../Manager/AddStocks.aspx">Add Stocks</a>
+                                <a class="nav-link" href="../Biller/AddStocks.aspx">Add Stocks</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../Manager/Customers.aspx">Customers</a>
+                                <a class="nav-link" href="../Biller/Customers.aspx">Customers</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../Manager/Bill.aspx">Bill</a>
+                                <a class="nav-link" href="../Biller/Bill.aspx">Bill</a>
                             </li>
                         </ul>
                         <div class="d-flex ">
@@ -50,7 +50,7 @@
                                         <asp:Label ID="lblFullName" runat="server"></asp:Label>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="../Manager/ChangePassword.aspx">Change Password</a></li>
+                                        <li><a class="dropdown-item" href="../Biller/ChangePassword.aspx">Change Password</a></li>
                                         <li>
                                             <hr class="dropdown-divider" />
                                         </li>

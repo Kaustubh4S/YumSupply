@@ -9,7 +9,7 @@ public partial class Manager_ManagerMasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!(Session["Active"].ToString() == "True") || (!(Session["RoleId"].ToString() == "1") && !(Session["RoleId"].ToString() == "2")))
+        if (!(Session["Active"].ToString() == "True") || (!(Session["RoleId"].ToString() == "1")))
             Response.Redirect("../Default.aspx");
         if (!Page.IsPostBack)
             lblFullName.Text = Session["FullName"].ToString();
