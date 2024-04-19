@@ -19,7 +19,7 @@
             return false;
         }
 </script>
-    <asp:Button ID="Button1" runat="server" Text="Print" OnClientClick="return printpanel();" />
+    <asp:Button ID="Button1" cssclass="btn btn-outline-success " runat="server" Text="Print" OnClientClick="return printpanel();" />
         <asp:HiddenField ID="HiddenField1" runat="server" />
     <asp:Panel ID="Panel1" runat="server">
         <style>
