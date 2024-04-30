@@ -6,9 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
 
 public partial class Biller_BillPreview : System.Web.UI.Page
 {
