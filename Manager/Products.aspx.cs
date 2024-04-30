@@ -32,8 +32,8 @@ public partial class Manager_Products : System.Web.UI.Page
         if (HiddenField1.Value == "")
         {
             //save
-            cmdCheck = "SELECT ProductID FROM Product WHERE (ProductName=@0 AND BrandID=@1);";
-            PID = SQLHelper.getID(cmdCheck, txtProductName.Text.Trim(), ddlBrand.SelectedValue);
+            cmdCheck = "SELECT ProductID FROM Product WHERE (ProductName=@0 AND BrandID=@1 and CategoryID=@2 and Price=@3);";
+            PID = SQLHelper.getID(cmdCheck, txtProductName.Text.Trim(), ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text.Trim());
             cmdInsertOrUpdate = "INSERT INTO Product (ProductName, BrandID, CategoryID, Price, Date) VALUES (@0, @1, @2, @3, @4)";
             lblMsg.Text = "Product " + SQLHelper.Commit(PID, cmdInsertOrUpdate, 0, txtProductName.Text.Trim(), ddlBrand.SelectedValue, ddlCategory.SelectedValue, txtPrice.Text, DateTime.Now);
             Clears();
