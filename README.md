@@ -1,2 +1,20 @@
-# YumSupplyBeta0
- This is a Billing and Stock Management System in ASPDotNet.
+# YumSupply
+ The project is Based on the ASP.Net with backbone of CSharp Code and in the Frontend I used the Bootstrap for the User Interface. 
+The main purpose of the Project to provide smooth and fast Billing and Managing experience for the Wholesale Shops with Proper User Friendly Graphical User Interface.
+
+Successfully completed :-
+•If User is not Active, it will not proceed further.
+•Without Login, internal pages can not be accessible.
+•Adding and Updating Products, Categories, Brands, Customers.
+•Only One Manager has access to Add and Update other users.
+•Both users can Add Stocks.
+•Both users can Create Bills and print the Bills.
+•Only Mangers can view the Reports.
+•Both users can Change their Passwords.
+•Used Seclar Variable while passing the query to Server.
+•Used AJAX Controls to validate entry from browser.
+•Records will not Replicate.
+
+Future Scope :-
+•May create A ECommerce Site for shopping Wholesale products.
+•Improved Validations. passing the query to Server.
