@@ -176,8 +176,8 @@ public partial class Biller_AddStocks : System.Web.UI.Page
         int inQty = SQLHelper.getID(cmd, ddlProduct.SelectedValue);
         if (inQty > 0)
         {
-            cmd = "UPDATE Stocks SET InQuantity = @0 WHERE (ProductID = @1)";
-            SQLHelper.ExecuteQuery(cmd, (inQty + Convert.ToInt32(txtQuantity.Text)), ddlProduct.SelectedValue);
+            cmd = "UPDATE Stocks SET InQuantity = @0, BrandID = @1, CategoryID = @2 WHERE (ProductID = @3)";
+            SQLHelper.ExecuteQuery(cmd, (inQty + Convert.ToInt32(txtQuantity.Text)), ddlBrand.SelectedValue, ddlCategory.SelectedValue, ddlProduct.SelectedValue);
         }
         else
         {
@@ -194,6 +194,12 @@ public partial class Biller_AddStocks : System.Web.UI.Page
         ddlCategory.SelectedValue = "-1";
         ddlProduct.SelectedValue = "-1";
         txtQuantity.Text = "";
+        LoadgrdAddStocks();
+    }
+
+    protected void grdAddStocks_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        grdAddStocks.PageIndex = e.NewPageIndex;
         LoadgrdAddStocks();
     }
 }

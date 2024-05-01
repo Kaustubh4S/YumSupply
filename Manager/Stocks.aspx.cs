@@ -137,4 +137,10 @@ public partial class Manager_Stocks : System.Web.UI.Page
         }
         LoadgrdStocks();
     }
+
+    protected void grdStocks_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        grdStocks.PageIndex = e.NewPageIndex;
+        LoadgrdStocks();
+    }
 }

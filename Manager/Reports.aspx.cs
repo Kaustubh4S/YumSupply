@@ -147,4 +147,10 @@ public partial class Manager_Reports : System.Web.UI.Page
     {
         LoadgrdReports();
     }
+
+    protected void grdReports_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        grdReports.PageIndex = e.NewPageIndex;
+        LoadgrdReports();
+    }
 }
